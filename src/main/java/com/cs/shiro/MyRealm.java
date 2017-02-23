@@ -1,6 +1,7 @@
 package com.cs.shiro;
 
 import com.cs.system.entity.SystemUser;
+import com.cs.system.service.SystemUserService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -8,6 +9,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by s0c00q3 on 2017/2/22.
@@ -15,6 +17,8 @@ import org.slf4j.LoggerFactory;
 public class MyRealm extends AuthorizingRealm{
 
     private final Logger log= LoggerFactory.getLogger(MyRealm.class);
+    @Autowired
+    private SystemUserService systemUserService;
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         return null;
@@ -28,7 +32,7 @@ public class MyRealm extends AuthorizingRealm{
         String pass=new String(password);
         SystemUser m=new SystemUser();
         m.setUserName(name);
-        m=myusersService.login(name);
+        m=systemUserService.login(name);
         if(m!=null&&m.getUserPassword().equals(DigestUtils.sha512Hex(pass))){
             AuthenticationInfo info=new SimpleAuthenticationInfo(m.getUserName(), password, m.getUserName());
             log.info("用户{}登录成功",name);
