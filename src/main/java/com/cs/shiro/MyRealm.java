@@ -32,13 +32,18 @@ public class MyRealm extends AuthorizingRealm{
         String pass=new String(password);
         SystemUser m=new SystemUser();
         m.setUserName(name);
-        m=systemUserService.login(name);
-        if(m!=null&&m.getUserPassword().equals(DigestUtils.sha512Hex(pass))){
-            AuthenticationInfo info=new SimpleAuthenticationInfo(m.getUserName(), password, m.getUserName());
-            log.info("用户{}登录成功",name);
-            return info;
+        try{
+            m=systemUserService.login(name);
+            if(m!=null&&m.getUserPassword().equals(DigestUtils.sha512Hex(pass))){
+                AuthenticationInfo info=new SimpleAuthenticationInfo(m.getUserName(), password, m.getUserName());
+                log.info("用户{}登录成功",name);
+                return info;
+            }
+            log.info("用户{}登录失败",name);
+        }catch (Exception e){
+            log.error("error{}",e);
+            log.error("用户{}登录失败",name);
         }
-        log.info("用户{}登录失败",name);
         return null;
     }
 }

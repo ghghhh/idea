@@ -14,7 +14,7 @@ public class SystemUser extends BaseRequestDTO{
     private String userName;
     private String userPassword;
     private String sex;
-    private LocalDate birthhday;
+    private LocalDate birthday;
     private String mobilePhone;
     private String email;
     private String enabled;
@@ -59,12 +59,12 @@ public class SystemUser extends BaseRequestDTO{
         this.sex = sex;
     }
 
-    public LocalDate getBirthhday() {
-        return birthhday;
+    public LocalDate getBirthday() {
+        return birthday;
     }
 
-    public void setBirthhday(LocalDate birthhday) {
-        this.birthhday = birthhday;
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
 
     public String getMobilePhone() {
@@ -99,7 +99,7 @@ public class SystemUser extends BaseRequestDTO{
                 ", userName='" + userName + '\'' +
                 ", userPassword='" + userPassword + '\'' +
                 ", sex='" + sex + '\'' +
-                ", birthhday=" + birthhday +
+                ", birthday=" + birthday +
                 ", mobilePhone='" + mobilePhone + '\'' +
                 ", email='" + email + '\'' +
                 ", enabled='" + enabled + '\'' +
