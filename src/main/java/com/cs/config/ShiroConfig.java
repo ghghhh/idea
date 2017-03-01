@@ -33,23 +33,19 @@ import java.util.Map;
  * spring boot 的bean初始化 约定的是自定义的优先于starter里的默认的bean初始化
  */
 @Configuration
-@ConditionalOnBean(name = "securityManager")
-public class ShiroConfig extends AbstractShiroWebFilterConfiguration{
+public class ShiroConfig {
 
-    @Bean
-    protected ShiroFilterFactoryBean shiroFilterFactoryBean() {
-        return super.shiroFilterFactoryBean();
-    }
+    @Autowired
+    private ShiroFilterFactoryBean shiroFilterFactoryBean;
 
     @Bean(name = "filterShiroFilterRegistrationBean")
     protected FilterRegistrationBean filterShiroFilterRegistrationBean() throws Exception {
 
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-        ShiroFilterFactoryBean   filterBean=shiroFilterFactoryBean();
         Map<String,Filter> map=new LinkedHashMap<>();
         map.put("authc",new FormFiler());
-        filterBean.setFilters(map);
-        filterRegistrationBean.setFilter((AbstractShiroFilter) filterBean.getObject());
+        shiroFilterFactoryBean.setFilters(map);
+        filterRegistrationBean.setFilter((AbstractShiroFilter) shiroFilterFactoryBean.getObject());
         filterRegistrationBean.setOrder(1);
         return filterRegistrationBean;
     }
