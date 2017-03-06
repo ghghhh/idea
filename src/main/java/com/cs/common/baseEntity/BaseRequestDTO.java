@@ -1,4 +1,4 @@
-package com.cs.common;
+package com.cs.common.baseEntity;
 
 import java.time.LocalDateTime;
 

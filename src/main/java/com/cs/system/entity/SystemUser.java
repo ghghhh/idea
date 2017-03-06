@@ -1,6 +1,6 @@
 package com.cs.system.entity;
 
-import com.cs.common.BaseRequestDTO;
+import com.cs.common.baseEntity.BaseRequestDTO;
 
 import java.time.LocalDate;
 

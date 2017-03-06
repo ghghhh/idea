@@ -21,6 +21,9 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
@@ -35,6 +38,8 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
+    @Value("${server.contextPath}")
+    private String path;
     @Autowired
     private ShiroFilterFactoryBean shiroFilterFactoryBean;
 
@@ -43,10 +48,14 @@ public class ShiroConfig {
 
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         Map<String,Filter> map=new LinkedHashMap<>();
-        map.put("authc",new FormFiler());
+        FormFiler filter=new FormFiler();
+        filter.setContextPath(path);
+        map.put("authc",filter);
         shiroFilterFactoryBean.setFilters(map);
         filterRegistrationBean.setFilter((AbstractShiroFilter) shiroFilterFactoryBean.getObject());
         filterRegistrationBean.setOrder(1);
         return filterRegistrationBean;
     }
+
+
 }

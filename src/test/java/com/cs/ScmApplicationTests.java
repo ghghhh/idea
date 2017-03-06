@@ -21,8 +21,9 @@ public class ScmApplicationTests {
 	public void contextLoads() {
 		logger.info("info");
 		logger.debug("debug");
-		con.delete("name");
+		con.opsForValue().set("name","cs");
 		String s=con.boundValueOps("name").get();
+		String s1=con.opsForValue().get("name");
 		System.out.print(s+"------------");
 	}
 

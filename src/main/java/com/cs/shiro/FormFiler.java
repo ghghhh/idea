@@ -11,6 +11,7 @@ import org.apache.shiro.web.util.WebUtils;
 
 public class FormFiler extends FormAuthenticationFilter {
 
+	private String contextPath;
 	public final static String URL="request_url";
 	protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request,
 			ServletResponse response) throws Exception {
@@ -18,10 +19,14 @@ public class FormFiler extends FormAuthenticationFilter {
         Session session = subject.getSession();
         if(savedRequest!=null){
         	String requestUrl= savedRequest.getRequestUrl();
-        	if(!requestUrl.equals("/cs/")){
+        	if(requestUrl.startsWith(contextPath)){
         		session.setAttribute(URL, requestUrl);
             }      	
         }             
 		return true;
+	}
+
+	public void setContextPath(String contextPath) {
+		this.contextPath = contextPath;
 	}
 }
