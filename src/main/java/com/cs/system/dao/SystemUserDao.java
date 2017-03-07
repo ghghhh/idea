@@ -11,5 +11,5 @@ public interface SystemUserDao {
     SystemUser login(String username);
     int addUser(SystemUser user);
     int updateUser(SystemUser user);
-    int deleteUser(String username);
+    int deleteUser(SystemUser user);
 }

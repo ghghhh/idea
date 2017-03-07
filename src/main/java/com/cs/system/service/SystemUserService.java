@@ -11,5 +11,5 @@ public interface SystemUserService {
     SystemUser login(String username);
     boolean addUser(SystemUser user);
     boolean updateUser(SystemUser user);
-    boolean deleteUser(String username);
+    boolean deleteUser(SystemUser user);
 }
