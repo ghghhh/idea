@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.system.dao.SystemUserDao">
+
+    <select id="login" resultMap="myUserMap">
+        select * from sys_user where user_name= #{username}
+    </select>
+
+    <resultMap type="com.cs.system.entity.SystemUser" id="myUserMap">
+        <result property="userName" column="user_name"/>
+        <result property="userPassword" column="user_password"/>
+        <result property="id" column="id"/>
+        <result property="info" column="info"/>
+        <result property="sex" column="sex"/>
+        <result property="mobilePhone" column="mobile_phone"/>
+        <result property="birthday" column="birthday"/>
+        <result property="email" column="email"/>
+    </resultMap>
+
+</mapper>
