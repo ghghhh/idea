@@ -3,6 +3,7 @@ package com.cs.system.entity;
 import com.cs.common.baseEntity.BaseRequestDTO;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 /**
  * Created by s0c00q3 on 2017/2/23.
@@ -18,7 +19,7 @@ public class SystemUser extends BaseRequestDTO{
     private String mobilePhone;
     private String email;
     private String enabled;
-
+    private Set<SystemRole> roles;
     public Long getId() {
         return id;
     }
@@ -91,6 +92,14 @@ public class SystemUser extends BaseRequestDTO{
         this.enabled = enabled;
     }
 
+    public Set<SystemRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<SystemRole> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
         return "SystemUser{" +
@@ -103,6 +112,7 @@ public class SystemUser extends BaseRequestDTO{
                 ", mobilePhone='" + mobilePhone + '\'' +
                 ", email='" + email + '\'' +
                 ", enabled='" + enabled + '\'' +
+                ", roles=" + roles +
                 '}';
     }
 }
