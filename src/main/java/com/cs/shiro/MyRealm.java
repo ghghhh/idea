@@ -30,12 +30,10 @@ public class MyRealm extends AuthorizingRealm{
         String name=userToken.getUsername();
         char[] password=userToken.getPassword();
         String pass=new String(password);
-        SystemUser m=new SystemUser();
-        m.setUserName(name);
         try{
-            m=systemUserService.login(name);
+            SystemUser m=systemUserService.login(name);
             if(m!=null&&m.getUserPassword().equals(DigestUtils.sha512Hex(pass))){
-                AuthenticationInfo info=new SimpleAuthenticationInfo(m.getUserName(), password, getName());
+                AuthenticationInfo info=new SimpleAuthenticationInfo(m, password, getName());
                 log.info("用户{}登录成功",name);
                 return info;
             }

@@ -29,7 +29,7 @@ public class ShiroBean {
         chainDefinition.addPathDefinition("/js/**", "anon");
         chainDefinition.addPathDefinition("/css/**", "anon");
         chainDefinition.addPathDefinition("/logout", "logout");
-        chainDefinition.addPathDefinition("/**", "authc");
+        chainDefinition.addPathDefinition("/**", "authc,only");
         return chainDefinition;
     }
 

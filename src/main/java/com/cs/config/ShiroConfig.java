@@ -3,6 +3,7 @@ package com.cs.config;
 
 import com.cs.shiro.FormFiler;
 import com.cs.shiro.MyRealm;
+import com.cs.shiro.Myfilter;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.mgt.SessionsSecurityManager;
 import org.apache.shiro.realm.Realm;
@@ -51,6 +52,7 @@ public class ShiroConfig {
         FormFiler filter=new FormFiler();
         filter.setContextPath(path);
         map.put("authc",filter);
+        map.put("only",new Myfilter());
         shiroFilterFactoryBean.setFilters(map);
         filterRegistrationBean.setFilter((AbstractShiroFilter) shiroFilterFactoryBean.getObject());
         filterRegistrationBean.setOrder(1);

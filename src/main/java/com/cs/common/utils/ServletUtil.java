@@ -1,5 +1,6 @@
 package com.cs.common.utils;
 
+import com.cs.common.aop.Update;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -19,7 +20,7 @@ public class ServletUtil {
 
     private Map<String,Object> map=new HashMap<>();
 
-    public boolean isStaticFile(String url){
+    public boolean isStaticFile(@Update String url){
          String[] ss=url.split("\\.");
         //.html
         if(ss!=null&&ss.length>0){

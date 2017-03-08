@@ -23,7 +23,6 @@ public class SystemUserServiceImpl implements SystemUserService{
 
     @Override
     public boolean addUser(@Update SystemUser user) {
-        UserUtils.createByUser(user);
         int i=userDao.addUser(user);
         return i>0;
     }

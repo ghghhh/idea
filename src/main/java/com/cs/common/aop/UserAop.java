@@ -1,13 +1,18 @@
 package com.cs.common.aop;
 
+import com.cs.common.baseEntity.BaseRequestDTO;
+import com.cs.common.utils.UserUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Parameter;
 
 /**
  * Created by s0c00q3 on 2017/3/7.
@@ -15,23 +20,30 @@ import java.lang.annotation.Annotation;
 @Component
 @Aspect
 public class UserAop {
-    @Pointcut("execution(* com.cs..*.*(..))")
+    @Pointcut("execution(* com.cs..*(..))")
     public void service(){}
     @Before("service()")
     public void doSome(JoinPoint jp){
+        Object[] args=jp.getArgs();
+        MethodSignature s=(MethodSignature)jp.getSignature();
+        Annotation[][] annotations=s.getMethod().getParameterAnnotations();
 
-        Object[] args= jp.getArgs();
-        if(args!=null&&args.length>0){
-            for(Object o:args){
-                Annotation[] an=o.getClass().getAnnotations();
-                if(an!=null&&an.length>0){
-                    for(Annotation a:an){
-                        if(a.equals("Update")){
-
-                        }
+        for(int i=0;i<annotations.length;i++){
+            for(Annotation a:annotations[i]){
+                if(a instanceof Update){
+                    if(args[i] instanceof BaseRequestDTO){
+                        BaseRequestDTO dto=(BaseRequestDTO)args[i];
+                        UserUtils.updateByUser(dto);
                     }
                 }
             }
+        }
+    }
+
+    public void check(Annotation annotation,Object args){
+        if(annotation instanceof Update){
+            BaseRequestDTO dto=(BaseRequestDTO)args;
+            UserUtils.updateByUser(dto);
         }
     }
 }
