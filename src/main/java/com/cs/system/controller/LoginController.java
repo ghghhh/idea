@@ -56,10 +56,11 @@ public class LoginController {
 		return r;
 	}
 	@RequestMapping(value = "do")
+	@ResponseBody
 	public Object doo(){
 		SystemUser user=new SystemUser();
 
-		myusersService.addUser(user);
-		return null;
+		//myusersService.addUser(user);
+		return user;
 	}
 }

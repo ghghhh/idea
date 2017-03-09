@@ -1,6 +1,7 @@
 package com.cs.common.utils;
 
 import com.cs.common.baseEntity.BaseRequestDTO;
+import com.cs.system.entity.SystemUser;
 import org.apache.shiro.SecurityUtils;
 
 import java.time.LocalDateTime;
@@ -10,13 +11,20 @@ import java.time.LocalDateTime;
  */
 public class UserUtils {
     public static void updateByUser( BaseRequestDTO dto){
-        String username= (String)SecurityUtils.getSubject().getPrincipal();
-        dto.setUpdateBy(username);
+        SystemUser user= (SystemUser)SecurityUtils.getSubject().getPrincipal();
+        dto.setUpdateBy(user.getUserName());
         dto.setUpdateDate(LocalDateTime.now());
     }
     public static void createByUser( BaseRequestDTO dto){
-        String username= (String)SecurityUtils.getSubject().getPrincipal();
-        dto.setCreateBy(username);
+        SystemUser user= (SystemUser)SecurityUtils.getSubject().getPrincipal();
+        dto.setCreateBy(user.getUserName());
         dto.setCreateDate(LocalDateTime.now());
+    }
+    public static String getUserName(){
+        SystemUser user= (SystemUser)SecurityUtils.getSubject().getPrincipal();
+        if(user==null){
+            return null;
+        }
+        return user.getUserName();
     }
 }
