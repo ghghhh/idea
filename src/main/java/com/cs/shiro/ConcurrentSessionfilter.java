@@ -1,26 +1,20 @@
 package com.cs.shiro;
 
 import com.cs.system.entity.SystemUser;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
-
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import java.io.Serializable;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by s0c00q3 on 2017/3/8.
  */
-public class Myfilter extends AccessControlFilter{
+public class ConcurrentSessionfilter extends AccessControlFilter{
     private static final String LOGINED="logined_";
 
-    @Value("#{ @environment['shiro.loginNum'] ?: 1 }")
     private int loginNum=1;
     private RedisTemplate redisTemplate;
     private RedisSessionDao redisSessionDao;
@@ -58,6 +52,10 @@ public class Myfilter extends AccessControlFilter{
                     String sessionId=(String)redisTemplate.opsForList().rightPop(cacheKey);
                     //删除该session
                     redisSessionDao.deleteById(sessionId);
+                    if(sid.equals(sessionId)){
+                        this.redirectToLogin(request,response);
+                        return false;
+                    }
                 }
 
             }else{
@@ -66,6 +64,10 @@ public class Myfilter extends AccessControlFilter{
                     String sessionId =(String)redisTemplate.opsForList().rightPop(cacheKey);
                     //删除该session
                     redisSessionDao.deleteById(sessionId);
+                    if(sid.equals(sessionId)){
+                        this.redirectToLogin(request,response);
+                        return false;
+                    }
                 }
             }
             return true;

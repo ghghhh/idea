@@ -1,6 +1,7 @@
 package com.cs.config;
 
 
+import com.cs.shiro.ConcurrentSessionfilter;
 import com.cs.shiro.FormFiler;
 import com.cs.shiro.MyRealm;
 import com.cs.shiro.Myfilter;
@@ -56,10 +57,10 @@ public class ShiroConfig {
         FormFiler filter=new FormFiler();
         filter.setContextPath(path);
         map.put("authc",filter);
-        Myfilter myfilter=new Myfilter();
+        ConcurrentSessionfilter myfilter=new ConcurrentSessionfilter();
         myfilter.setRedisTemplate(redisTemplate);
         myfilter.setRedisSessionDao(redisSessionDao);
-        map.put("only",myfilter);
+        map.put("consession",myfilter);
         shiroFilterFactoryBean.setFilters(map);
         filterRegistrationBean.setFilter((AbstractShiroFilter) shiroFilterFactoryBean.getObject());
         filterRegistrationBean.setOrder(1);
