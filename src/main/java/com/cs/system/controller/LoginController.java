@@ -21,7 +21,7 @@ public class LoginController {
 	
 	final Logger log=LoggerFactory.getLogger(LoginController.class);
     
-	private final static String successUrl="/html/main.html";
+	private final static String successUrl="/cs/html/main.html";
 	@RequestMapping(value="login",method=RequestMethod.GET)
 	public String login0(SystemUser myusers) {
 		//UsernamePasswordToken token=new UsernamePasswordToken(myusers.getUserName(), myusers.getUserPassword().toCharArray());
@@ -55,12 +55,12 @@ public class LoginController {
 		}
 		return r;
 	}
-	@RequestMapping(value = "do")
+	@RequestMapping(value = "logout/haha_haha")
 	@ResponseBody
-	public Object doo(){
-		SystemUser user=new SystemUser();
-
-		//myusersService.addUser(user);
-		return user;
+	public Object logout(){
+		Subject subject=SecurityUtils.getSubject();
+		subject.logout();
+		ReturnObject r=new ReturnObject();
+		return r;
 	}
 }

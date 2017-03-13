@@ -15,7 +15,7 @@ import java.util.List;
 public class ConcurrentSessionfilter extends AccessControlFilter{
     private static final String LOGINED="logined_";
 
-    private int loginNum=1;
+    private int loginNum;
     private RedisTemplate redisTemplate;
     private RedisSessionDao redisSessionDao;
     @Override
@@ -80,5 +80,9 @@ public class ConcurrentSessionfilter extends AccessControlFilter{
 
     public void setRedisSessionDao(RedisSessionDao redisSessionDao) {
         this.redisSessionDao = redisSessionDao;
+    }
+
+    public void setLoginNum(int loginNum) {
+        this.loginNum = loginNum;
     }
 }
