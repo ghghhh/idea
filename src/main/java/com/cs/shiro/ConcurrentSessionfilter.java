@@ -3,7 +3,6 @@ package com.cs.shiro;
 import com.cs.system.entity.SystemUser;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -20,7 +19,7 @@ public class ConcurrentSessionfilter extends AccessControlFilter{
     private RedisSessionDao redisSessionDao;
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
-        Subject subject=getSubject(request,response);
+        //Subject subject=getSubject(request,response);
         return false;
     }
 
@@ -29,50 +28,29 @@ public class ConcurrentSessionfilter extends AccessControlFilter{
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
         long l=0;
         Subject subject=getSubject(request,response);
-        if(!subject.isAuthenticated()){
-            return true;
+        SystemUser user=(SystemUser)subject.getPrincipal();
+        String cacheName=LOGINED+user.getUserName();
+        List<String> list=redisTemplate.opsForList().range(cacheName,0,loginNum);
+        String sid=(String)subject.getSession().getId();
+        if(list==null){
+            l=redisTemplate.opsForList().leftPush(cacheName,sid);
+            checkNum(l,cacheName);
         }else{
-            SystemUser user=(SystemUser)subject.getPrincipal();
-            String cacheKey=LOGINED+user.getUserName();
-            String sid=(String)subject.getSession().getId();
-            List<String> list=redisTemplate.opsForList().range(cacheKey,0,loginNum);
-            if(list==null){
-                l=redisTemplate.opsForList().leftPush(cacheKey,sid);
-                if(l>loginNum){
-                    String sessionId =(String)redisTemplate.opsForList().rightPop(cacheKey);
-                    //删除该session
-                    redisSessionDao.deleteById(sessionId);
-                }
-                return true;
-            }
             if(list.contains(sid)){
-                if(list.size()<=loginNum){
-                    return true;
-                }else{
-                    String sessionId=(String)redisTemplate.opsForList().rightPop(cacheKey);
-                    //删除该session
-                    redisSessionDao.deleteById(sessionId);
-                    if(sid.equals(sessionId)){
-                        this.redirectToLogin(request,response);
-                        return false;
-                    }
-                }
-
+                return true;
             }else{
-                l=redisTemplate.opsForList().leftPush(cacheKey,sid);
-                if(l>loginNum){
-                    String sessionId =(String)redisTemplate.opsForList().rightPop(cacheKey);
-                    //删除该session
-                    redisSessionDao.deleteById(sessionId);
-                    if(sid.equals(sessionId)){
-                        this.redirectToLogin(request,response);
-                        return false;
-                    }
+                if(subject.isRemembered()&&list.size()>=loginNum){
+                    subject.logout();
+                    this.saveRequestAndRedirectToLogin(request ,response );
+                    return false;
                 }
+                l=redisTemplate.opsForList().leftPush(cacheName,sid);
+                checkNum(l,cacheName);
             }
-            return true;
         }
+        return true;
     }
+
 
     public void setRedisTemplate(RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
@@ -84,5 +62,12 @@ public class ConcurrentSessionfilter extends AccessControlFilter{
 
     public void setLoginNum(int loginNum) {
         this.loginNum = loginNum;
+    }
+
+    public void checkNum(long l,String cacheName){
+        if(l>loginNum){
+            String rsid=(String)redisTemplate.opsForList().rightPop(cacheName);
+            redisSessionDao.deleteById(rsid);
+        }
     }
 }

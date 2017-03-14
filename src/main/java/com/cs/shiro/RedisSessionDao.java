@@ -81,12 +81,14 @@ public class RedisSessionDao extends AbstractSessionDAO{
             return ;
         }else{
             if(session.getId()!=null){
+                logger.info("redis-----------del--------sessionId:{}",session.getId());
                 redisTemplate.delete(CACHE_KEY+session.getId());
             }
         }
     }
 
     public void deleteById(String sessionId) {
+        logger.info("redis-----------delById--------sessionId:{}",sessionId);
         redisTemplate.delete(CACHE_KEY+sessionId);
     }
 
