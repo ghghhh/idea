@@ -5,6 +5,7 @@ import com.cs.system.service.SystemUserService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
@@ -21,7 +22,10 @@ public class MyRealm extends AuthorizingRealm{
     private SystemUserService systemUserService;
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        return null;
+        SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
+        info.addRole("admin");
+        info.addStringPermission("admin");
+        return info;
     }
 
     @Override
