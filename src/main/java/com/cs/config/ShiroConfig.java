@@ -1,8 +1,10 @@
 package com.cs.config;
 
 
+import com.cs.common.utils.ServletUtil;
 import com.cs.shiro.ConcurrentSessionfilter;
 import com.cs.shiro.FormFiler;
+import com.cs.shiro.MyPermsFilter;
 import com.cs.shiro.RedisSessionDao;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.servlet.AbstractShiroFilter;
@@ -35,24 +37,37 @@ public class ShiroConfig {
     private RedisTemplate redisTemplate;
     @Autowired
     private RedisSessionDao redisSessionDao;
+    @Autowired
+    private ServletUtil servletUtil;
     @Bean(name = "filterShiroFilterRegistrationBean")
     protected FilterRegistrationBean filterShiroFilterRegistrationBean() throws Exception {
-
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         Map<String,Filter> map=new LinkedHashMap<>();
-        FormFiler filter=new FormFiler();
-        filter.setContextPath(path);
-        map.put("authc",filter);
-        ConcurrentSessionfilter myfilter=new ConcurrentSessionfilter();
-        myfilter.setRedisTemplate(redisTemplate);
-        myfilter.setRedisSessionDao(redisSessionDao);
-        myfilter.setLoginNum(loginNum);
-        map.put("consession",myfilter);
+        map.put("authc",formFiler());
+        map.put("perms",myPermsFilter());
+        map.put("consession",concurrentSessionfilter());
         shiroFilterFactoryBean.setFilters(map);
         filterRegistrationBean.setFilter((AbstractShiroFilter) shiroFilterFactoryBean.getObject());
         filterRegistrationBean.setOrder(1);
         return filterRegistrationBean;
     }
 
+    public FormFiler formFiler(){
+        FormFiler filter=new FormFiler();
+        filter.setContextPath(path);
+        return filter;
+    }
+    public MyPermsFilter myPermsFilter(){
+        MyPermsFilter perm=new MyPermsFilter();
+        perm.setUtil(servletUtil);
+        return perm;
+    }
 
+    public ConcurrentSessionfilter concurrentSessionfilter(){
+        ConcurrentSessionfilter myfilter=new ConcurrentSessionfilter();
+        myfilter.setRedisTemplate(redisTemplate);
+        myfilter.setRedisSessionDao(redisSessionDao);
+        myfilter.setLoginNum(loginNum);
+        return myfilter;
+    }
 }

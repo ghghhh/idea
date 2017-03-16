@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.system.dao.SystemRoleDao">
+
+
+    <select id="getRoleById" resultType="com.cs.system.entity.SystemRole">
+         select * from sys_role where id=#{id}
+    </select>
+
+    <select id="getRoleByPid" resultType="com.cs.system.entity.SystemRole">
+        select *from sys_role where id=#{pid}
+    </select>
+
+    <insert id="addRole" parameterType="com.cs.system.entity.SystemRole">
+        INSERT INTO sys_role
+        (id,role_name,cn_name,parent_id,is_parent,enabled,createBy,createDate,updateBy,updateDate)
+        VALUES (#{id},#{role_name},#{cn_name},#{parent_id},#{is_parent},#{enabled},#{createBy},#{createDate},#{updateBy},#{updateDate})
+    </insert>
+</mapper>

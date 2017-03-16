@@ -20,7 +20,7 @@ public class ServletUtil {
 
     private Map<String,Object> map=new HashMap<>();
 
-    public boolean isStaticFile(@Update String url){
+    public boolean isStaticFile(String url){
          String[] ss=url.split("\\.");
         //.html
         if(ss!=null&&ss.length>0){
@@ -43,6 +43,16 @@ public class ServletUtil {
             return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         }catch(Exception e){
             return null;
+        }
+    }
+
+    public boolean isStaticFile(){
+        HttpServletRequest request=this.getRequest();
+        String url=request.getServletPath();
+        if(this.isStaticFile(url)){
+            return true;
+        }else{
+            return false;
         }
     }
 }

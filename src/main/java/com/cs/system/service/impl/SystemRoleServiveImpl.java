@@ -1,27 +1,33 @@
 package com.cs.system.service.impl;
 
+import com.cs.system.dao.SystemRoleDao;
 import com.cs.system.entity.SystemRole;
 import com.cs.system.service.SystemRoleServive;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by s0c00q3 on 2017/3/7.
  */
+@Service
 public class SystemRoleServiveImpl implements SystemRoleServive {
+    @Autowired
+    private SystemRoleDao systemRoleDao;
     @Override
     public SystemRole getRoleById(int id) {
-        return null;
+        return systemRoleDao.getRoleById(id);
     }
 
     @Override
     public boolean createRole(SystemRole role) {
-        return false;
+        return systemRoleDao.addRole(role) > 0 ? true:false;
     }
 
     @Override
     public boolean delRole(int id) {
-        return false;
+        return systemRoleDao.delRoleById(id) > 0 ?true:false;
     }
 
     @Override
@@ -32,5 +38,10 @@ public class SystemRoleServiveImpl implements SystemRoleServive {
     @Override
     public List<SystemRole> getRoleListByUserName(String name) {
         return null;
+    }
+
+    @Override
+    public List<SystemRole> getRolesByPid(int pid) {
+        return systemRoleDao.getRoleByPid(pid);
     }
 }

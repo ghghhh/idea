@@ -32,31 +32,22 @@ public class RedisSessionDao extends AbstractSessionDAO{
     private RedisTemplate redisTemplate;
     private static final String CACHE_KEY="session_";
     protected Serializable doCreate(Session session) {
-
-        if(this.isStaticFile()){
-            return null;
-        }else{
             Serializable sessionId = generateSessionId(session);
             assignSessionId(session, sessionId);
             redisTemplate.opsForValue().set(CACHE_KEY+sessionId,session,session.getTimeout(),TimeUnit.MILLISECONDS);
             return sessionId;
-        }
     }
 
     protected Session doReadSession(Serializable sessionId) {
-        if(this.isStaticFile()){
-            return null;
-        }else{
-            logger.info("redis-----------get--------sessionId:{}",sessionId);
+            logger.debug("redis-----------get--------sessionId:{}",sessionId);
             return (Session)redisTemplate.opsForValue().get(CACHE_KEY+sessionId);
-        }
     }
 
     private boolean isStaticFile(){
         HttpServletRequest request=servletUtil.getRequest();
         String url=request.getServletPath();
         if(servletUtil.isStaticFile(url)){
-            logger.info("静态文件url：{}不生成session",url);
+            logger.debug("url:{}为静态文件",url);
             return true;
         }else{
             return false;
@@ -69,7 +60,7 @@ public class RedisSessionDao extends AbstractSessionDAO{
             return ;
         }else{
             if(session.getId()!=null){
-                logger.info("redis-----------update--------sessionId:{}",session.getId());
+                logger.debug("redis-----------update--------sessionId:{}",session.getId());
                 redisTemplate.opsForValue().set(CACHE_KEY+session.getId(),session,session.getTimeout(),TimeUnit.MILLISECONDS);
             }
         }
@@ -81,14 +72,14 @@ public class RedisSessionDao extends AbstractSessionDAO{
             return ;
         }else{
             if(session.getId()!=null){
-                logger.info("redis-----------del--------sessionId:{}",session.getId());
+                logger.debug("redis-----------del--------sessionId:{}",session.getId());
                 redisTemplate.delete(CACHE_KEY+session.getId());
             }
         }
     }
 
     public void deleteById(String sessionId) {
-        logger.info("redis-----------delById--------sessionId:{}",sessionId);
+        logger.debug("redis-----------delById--------sessionId:{}",sessionId);
         redisTemplate.delete(CACHE_KEY+sessionId);
     }
 

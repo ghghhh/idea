@@ -51,7 +51,7 @@
     $.ajax({
     	url:path+"/login",
     	type:"post",
-    	data:{"username":name,"password":pass,"rememberMe":true},
+    	data:{"username":name,"password":pass},
         success:function(data){
         	if(data.code=="200"){
             	window.location.href=data.data;
