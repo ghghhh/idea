@@ -14,5 +14,5 @@ public interface SystemRoleDao {
     int updateRole(SystemRole systemRole);
     int delRoleById(int id);
     SystemRole getRoleById(int id);
-    List<SystemRole> getRoleByPid(int pid);
+    List<SystemRole> getRoleListByUserId(long uid);
 }

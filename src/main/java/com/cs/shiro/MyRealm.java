@@ -1,6 +1,10 @@
 package com.cs.shiro;
 
+import com.cs.system.entity.SystemPermission;
+import com.cs.system.entity.SystemRole;
 import com.cs.system.entity.SystemUser;
+import com.cs.system.service.SystemPermissionService;
+import com.cs.system.service.SystemRoleServive;
 import com.cs.system.service.SystemUserService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.shiro.authc.*;
@@ -12,6 +16,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by s0c00q3 on 2017/2/22.
  */
@@ -20,11 +27,28 @@ public class MyRealm extends AuthorizingRealm{
     private final Logger log= LoggerFactory.getLogger(MyRealm.class);
     @Autowired
     private SystemUserService systemUserService;
+    @Autowired
+    private SystemRoleServive systemRoleServive;
+    @Autowired
+    private SystemPermissionService systemPermissionService;
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
-        info.addRole("admin");
-        info.addStringPermission("admin");
+        SystemUser user=(SystemUser)principals.getPrimaryPrincipal();
+        List<SystemRole> roles=systemRoleServive.getRoleListByUserId(user.getId());
+        List<String> roleList=new ArrayList<>();
+        List<String> permList=new ArrayList<>();
+        for(SystemRole r:roles){
+            roleList.add(r.getRoleName());
+            List<SystemPermission> plist=systemPermissionService.getPermissionListByRoleId(r.getId());
+            plist.forEach(p->permList.add(p.getPermissionUrl()));
+        }
+        roles.forEach(r->{roleList.add(r.getRoleName());
+            List<SystemPermission> plist=systemPermissionService.getPermissionListByRoleId(r.getId());
+            plist.forEach(p->permList.add(p.getPermissionUrl()));}
+        );
+        info.addRoles(roleList);
+        info.addStringPermissions(permList);
         return info;
     }
 

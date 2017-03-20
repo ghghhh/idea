@@ -6,6 +6,7 @@ import com.cs.system.service.SystemRoleServive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,12 +37,9 @@ public class SystemRoleServiveImpl implements SystemRoleServive {
     }
 
     @Override
-    public List<SystemRole> getRoleListByUserName(String name) {
-        return null;
+    public List<SystemRole> getRoleListByUserId(long uid) {
+        List<SystemRole> list= systemRoleDao.getRoleListByUserId(uid);
+        return list;
     }
 
-    @Override
-    public List<SystemRole> getRolesByPid(int pid) {
-        return systemRoleDao.getRoleByPid(pid);
-    }
 }

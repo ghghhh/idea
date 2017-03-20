@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.system.dao.SystemMenuDao">
+    
+    <select id="getMenuListByFatherId" resultMap="menuMap">
+     select m.* from sys_menu m 
+     left join sys_role_menu rm on m.id=rm.menu_id 
+     where m.parent_id=#{id} and rm.role_id in 
+      <foreach collection="roles" item="role" open="(" separator="," close=")">
+        #{role.id}
+      </foreach>
+    </select>
+    <resultMap type="com.cs.system.entity.SystemMenu" id="menuMap">
+        <result column="id" property="id"/>
+        <result column="menu_name" property="text"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="menu_type" property="menuType"/>
+        <result column="menu_url" property="menuUrl"/>
+        <result column="menu_state" property="state"/>
+        
+    </resultMap>
+</mapper>

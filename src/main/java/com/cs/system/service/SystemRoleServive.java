@@ -12,6 +12,5 @@ public interface SystemRoleServive {
     boolean createRole(SystemRole role);
     boolean delRole(int id);
     boolean updateRole(SystemRole role);
-    List<SystemRole> getRoleListByUserName(String name);
-    List<SystemRole> getRolesByPid(int pid);
+    List<SystemRole> getRoleListByUserId(long uid);
 }

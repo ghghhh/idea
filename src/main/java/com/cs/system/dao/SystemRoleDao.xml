@@ -4,16 +4,17 @@
 
 
     <select id="getRoleById" resultType="com.cs.system.entity.SystemRole">
-         select * from sys_role where id=#{id}
-    </select>
-
-    <select id="getRoleByPid" resultType="com.cs.system.entity.SystemRole">
-        select *from sys_role where id=#{pid}
+         select * from sys_role where id=#{id} and enabled="Y"
     </select>
 
     <insert id="addRole" parameterType="com.cs.system.entity.SystemRole">
         INSERT INTO sys_role
-        (id,role_name,cn_name,parent_id,is_parent,enabled,createBy,createDate,updateBy,updateDate)
-        VALUES (#{id},#{role_name},#{cn_name},#{parent_id},#{is_parent},#{enabled},#{createBy},#{createDate},#{updateBy},#{updateDate})
+        (id,role_name,cn_name,enabled,createBy,createDate,updateBy,updateDate)
+        VALUES (#{id},#{role_name},#{cn_name},#{enabled},#{createBy},#{createDate},#{updateBy},#{updateDate})
     </insert>
+
+    <select id="getRoleListByUserId" resultType="com.cs.system.entity.SystemRole">
+        select r.* from sys_role r left join sys_user_role ur on r.id=ur.role_id
+        where ur.user_id=#{uid} and r.enabled="Y"
+    </select>
 </mapper>
