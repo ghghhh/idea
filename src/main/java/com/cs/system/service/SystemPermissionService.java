@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface SystemPermissionService {
     boolean addPermission(SystemPermission permission);
-    boolean delPermission(int id);
+    boolean delPermission(Integer id) throws Exception;
     boolean updatePermission(SystemPermission permission);
     SystemPermission getPermissionById(int id);
     List<SystemPermission> getPermissionListByRoleId(int rid);

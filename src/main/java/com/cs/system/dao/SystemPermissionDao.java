@@ -15,4 +15,5 @@ public interface SystemPermissionDao {
     int updatePermission(SystemPermission permission);
     SystemPermission getPermissionById(int id);
     List<SystemPermission> getPermissionListByRoleId(int rid);
+    List<Integer> getRoleIdListByPerms(int id);
 }

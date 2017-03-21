@@ -9,7 +9,7 @@ public class SystemPermission extends BaseRequestDTO {
     private Integer id;
     private String permissionUrl;
     private String permissionName;
-
+    private String enabled;
     public Integer getId() {
         return id;
     }
@@ -32,5 +32,13 @@ public class SystemPermission extends BaseRequestDTO {
 
     public void setPermissionName(String permissionName) {
         this.permissionName = permissionName;
+    }
+
+    public String getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(String enabled) {
+        this.enabled = enabled;
     }
 }

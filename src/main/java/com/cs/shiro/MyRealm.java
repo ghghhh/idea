@@ -38,11 +38,6 @@ public class MyRealm extends AuthorizingRealm{
         List<SystemRole> roles=systemRoleServive.getRoleListByUserId(user.getId());
         List<String> roleList=new ArrayList<>();
         List<String> permList=new ArrayList<>();
-        for(SystemRole r:roles){
-            roleList.add(r.getRoleName());
-            List<SystemPermission> plist=systemPermissionService.getPermissionListByRoleId(r.getId());
-            plist.forEach(p->permList.add(p.getPermissionUrl()));
-        }
         roles.forEach(r->{roleList.add(r.getRoleName());
             List<SystemPermission> plist=systemPermissionService.getPermissionListByRoleId(r.getId());
             plist.forEach(p->permList.add(p.getPermissionUrl()));}
