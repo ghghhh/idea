@@ -1,6 +1,5 @@
 package com.cs.config;
 
-import com.cs.shiro.FormFiler;
 import com.cs.shiro.MyRealm;
 import com.cs.shiro.RedisSessionDao;
 import org.apache.shiro.realm.Realm;
@@ -26,10 +25,11 @@ public class ShiroBean {
     @Bean
     public ShiroFilterChainDefinition shiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
+        chainDefinition.addPathDefinition("/login", "authc");
         chainDefinition.addPathDefinition("/js/**", "anon");
         chainDefinition.addPathDefinition("/css/**", "anon");
         chainDefinition.addPathDefinition("/logout", "logout");
-        chainDefinition.addPathDefinition("/**", "authc");
+        chainDefinition.addPathDefinition("/**", "user,consession,perms");
         return chainDefinition;
     }
 

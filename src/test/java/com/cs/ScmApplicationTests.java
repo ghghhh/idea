@@ -1,5 +1,7 @@
 package com.cs;
 
+import com.cs.system.entity.SystemUser;
+import com.cs.system.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -16,6 +18,8 @@ public class ScmApplicationTests {
 	@Autowired
 	private StringRedisTemplate con;
 
+	@Autowired
+	private UserService userService;
 	private static final Logger logger=LoggerFactory.getLogger(ScmApplicationTests.class);
 	@Test
 	public void contextLoads() {
@@ -26,5 +30,9 @@ public class ScmApplicationTests {
 		String s1=con.opsForValue().get("name");
 		System.out.print(s+"------------");
 	}
-
+    @Test
+	public void addUser(){
+		SystemUser systemUser=new SystemUser();
+		userService.addUser(systemUser);
+	}
 }

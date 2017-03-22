@@ -1,5 +1,6 @@
 package com.cs.common.utils;
 
+import com.cs.common.aop.Update;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -42,6 +43,16 @@ public class ServletUtil {
             return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         }catch(Exception e){
             return null;
+        }
+    }
+
+    public boolean isStaticFile(){
+        HttpServletRequest request=this.getRequest();
+        String url=request.getServletPath();
+        if(this.isStaticFile(url)){
+            return true;
+        }else{
+            return false;
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.cs.shiro;
 
 import com.cs.common.utils.ServletUtil;
+import com.cs.common.utils.UserUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
@@ -29,33 +30,24 @@ public class RedisSessionDao extends AbstractSessionDAO{
 
     @Autowired
     private RedisTemplate redisTemplate;
-    private static final String CACHE_KEY="shiro_session";
+    private static final String CACHE_KEY="session_";
     protected Serializable doCreate(Session session) {
-
-        if(this.isStaticFile()){
-            return null;
-        }else{
             Serializable sessionId = generateSessionId(session);
             assignSessionId(session, sessionId);
-            redisTemplate.opsForHash().put(CACHE_KEY,sessionId,session);
+            redisTemplate.opsForValue().set(CACHE_KEY+sessionId,session,session.getTimeout(),TimeUnit.MILLISECONDS);
             return sessionId;
-        }
     }
 
     protected Session doReadSession(Serializable sessionId) {
-        if(this.isStaticFile()){
-            return null;
-        }else{
-            logger.info("redis------------------------sessionId:{}",sessionId);
-            return (Session)redisTemplate.opsForHash().get(CACHE_KEY,sessionId);
-        }
+            logger.debug("redis-----------get--------sessionId:{}",sessionId);
+            return (Session)redisTemplate.opsForValue().get(CACHE_KEY+sessionId);
     }
 
     private boolean isStaticFile(){
         HttpServletRequest request=servletUtil.getRequest();
         String url=request.getServletPath();
         if(servletUtil.isStaticFile(url)){
-            logger.info("静态文件url：{}不生成session",url);
+            logger.debug("url:{}为静态文件",url);
             return true;
         }else{
             return false;
@@ -68,7 +60,8 @@ public class RedisSessionDao extends AbstractSessionDAO{
             return ;
         }else{
             if(session.getId()!=null){
-                redisTemplate.opsForHash().put(CACHE_KEY,session.getId(),session);
+                logger.debug("redis-----------update--------sessionId:{}",session.getId());
+                redisTemplate.opsForValue().set(CACHE_KEY+session.getId(),session,session.getTimeout(),TimeUnit.MILLISECONDS);
             }
         }
     }
@@ -79,14 +72,19 @@ public class RedisSessionDao extends AbstractSessionDAO{
             return ;
         }else{
             if(session.getId()!=null){
-                redisTemplate.opsForHash().delete(CACHE_KEY,session.getId());
+                logger.debug("redis-----------del--------sessionId:{}",session.getId());
+                redisTemplate.delete(CACHE_KEY+session.getId());
             }
         }
     }
 
+    public void deleteById(String sessionId) {
+        logger.debug("redis-----------delById--------sessionId:{}",sessionId);
+        redisTemplate.delete(CACHE_KEY+sessionId);
+    }
+
     @Override
     public Collection<Session> getActiveSessions() {
-        List<Session> list=redisTemplate.opsForHash().values(CACHE_KEY);
-        return Collections.unmodifiableList(list);
+       return null;
     }
 }

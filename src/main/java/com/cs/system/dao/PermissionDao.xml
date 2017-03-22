@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cs.system.dao.PermissionDao">
+
+    <select id="getPermissionById" resultType="com.cs.system.entity.SystemPermission">
+        SELECT * FROM sys_permission WHERE id=#{id} and enabled="Y"
+    </select>
+
+    <select id="getPermissionListByRoleId" resultType="com.cs.system.entity.SystemPermission">
+        SELECT p.* from sys_permission p LEFT JOIN sys_role_permission rp on p.id=rp.permission_id
+        WHERE rp.role_id=#{rid} and p.enabled="Y"
+    </select>
+    
+    <select id="getRoleIdListByPerms" resultType="java.lang.Integer">
+        select role_id from sys_role_permission where permission_id=#{id}
+    </select>
+
+    <update id="updatePermission" parameterType="com.cs.system.entity.SystemPermission">
+        UPDATE sys_permission SET
+        permission_url=#{permissionUrl},permission_name=#{permissionName},enabled=#{enabled}
+         where id=#{id}
+    </update>
+</mapper>

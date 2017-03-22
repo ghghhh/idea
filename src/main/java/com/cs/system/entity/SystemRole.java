@@ -10,12 +10,8 @@ public class SystemRole extends BaseRequestDTO{
 	 * 
 	 */
 	private Integer id;
-	@NotEmpty(message="1000:角色名不能为空")
 	private String roleName;
 	private String cnName;
-	@NotNull(message="1000:角色父id不能为空")
-	private Integer parentId;
-	private String isParent;
 	private String enabled;
 	public Integer getId() {
 		return id;
@@ -34,19 +30,6 @@ public class SystemRole extends BaseRequestDTO{
 	}
 	public void setCnName(String cnName) {
 		this.cnName = cnName;
-	}
-	
-	public Integer getParentId() {
-		return parentId;
-	}
-	public void setParentId(Integer parentId) {
-		this.parentId = parentId;
-	}
-	public String getIsParent() {
-		return isParent;
-	}
-	public void setIsParent(String isParent) {
-		this.isParent = isParent;
 	}
 	public String getEnabled() {
 		return enabled;

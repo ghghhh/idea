@@ -1,33 +1,21 @@
 package com.cs.config;
 
 
+import com.cs.common.utils.ServletUtil;
+import com.cs.shiro.ConcurrentSessionfilter;
 import com.cs.shiro.FormFiler;
-import com.cs.shiro.MyRealm;
-import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.mgt.SessionsSecurityManager;
-import org.apache.shiro.realm.Realm;
-import org.apache.shiro.spring.config.AbstractShiroConfiguration;
-import org.apache.shiro.spring.config.web.autoconfigure.ShiroWebFilterConfiguration;
+import com.cs.shiro.MyPermsFilter;
+import com.cs.shiro.RedisSessionDao;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.spring.web.config.AbstractShiroWebFilterConfiguration;
-import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
-import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
-import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
-
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -40,22 +28,46 @@ public class ShiroConfig {
 
     @Value("${server.contextPath}")
     private String path;
+
+    @Value("${shiro.login.maxLoginNum}")
+    private int loginNum;
     @Autowired
     private ShiroFilterFactoryBean shiroFilterFactoryBean;
-
+    @Autowired
+    private RedisTemplate redisTemplate;
+    @Autowired
+    private RedisSessionDao redisSessionDao;
+    @Autowired
+    private ServletUtil servletUtil;
     @Bean(name = "filterShiroFilterRegistrationBean")
     protected FilterRegistrationBean filterShiroFilterRegistrationBean() throws Exception {
-
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         Map<String,Filter> map=new LinkedHashMap<>();
-        FormFiler filter=new FormFiler();
-        filter.setContextPath(path);
-        map.put("authc",filter);
+        map.put("authc",formFiler());
+        map.put("perms",myPermsFilter());
+        map.put("consession",concurrentSessionfilter());
         shiroFilterFactoryBean.setFilters(map);
         filterRegistrationBean.setFilter((AbstractShiroFilter) shiroFilterFactoryBean.getObject());
         filterRegistrationBean.setOrder(1);
         return filterRegistrationBean;
     }
 
+    public FormFiler formFiler(){
+        FormFiler filter=new FormFiler();
+        filter.setContextPath(path);
+        return filter;
+    }
+    public MyPermsFilter myPermsFilter(){
+        MyPermsFilter perm=new MyPermsFilter();
+        perm.setUtil(servletUtil);
+        return perm;
+    }
 
+    public ConcurrentSessionfilter concurrentSessionfilter(){
+        ConcurrentSessionfilter myfilter=new ConcurrentSessionfilter();
+        myfilter.setRedisTemplate(redisTemplate);
+        myfilter.setRedisSessionDao(redisSessionDao);
+        myfilter.setLoginNum(loginNum);
+        return myfilter;
+    }
 }
