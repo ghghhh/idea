@@ -2,17 +2,17 @@ package com.cs.system.service.impl;
 
 import java.util.List;
 import java.util.Set;
-import com.cs.system.dao.SystemMenuDao;
+import com.cs.system.dao.MenuDao;
 import com.cs.system.entity.SystemMenu;
 import com.cs.system.entity.SystemRole;
-import com.cs.system.service.SystemMenuService;
+import com.cs.system.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 @Service
-public class SystemMenuServiceImpl implements SystemMenuService {
+public class MenuServiceImpl implements MenuService {
 
 	@Autowired
-	private SystemMenuDao menuDao;
+	private MenuDao menuDao;
 	@Override
 	public List<SystemMenu> getMenuListByParentId(int id, Set<SystemRole> roles) {
 		

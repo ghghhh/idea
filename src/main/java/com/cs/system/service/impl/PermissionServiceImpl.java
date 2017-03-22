@@ -1,9 +1,9 @@
 package com.cs.system.service.impl;
 
 import static com.cs.common.utils.CacheName.PERMISSIONS_ROLE;
-import com.cs.system.dao.SystemPermissionDao;
+import com.cs.system.dao.PermissionDao;
 import com.cs.system.entity.SystemPermission;
-import com.cs.system.service.SystemPermissionService;
+import com.cs.system.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -16,14 +16,14 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class SystemPermissionServiceImpl implements SystemPermissionService{
+public class PermissionServiceImpl implements PermissionService {
     @Autowired
-    private SystemPermissionDao systemPermissionDao;
+    private PermissionDao permissionDao;
     @Autowired
     private RedisTemplate redisTemplate;
     @Override
     public boolean addPermission(SystemPermission permission) {
-       int i= systemPermissionDao.addPermission(permission);
+       int i= permissionDao.addPermission(permission);
         return i>0;
     }
 
@@ -32,7 +32,7 @@ public class SystemPermissionServiceImpl implements SystemPermissionService{
         if(id==null){
               throw new Exception();
         }
-        int i=systemPermissionDao.delPermission(id);
+        int i= permissionDao.delPermission(id);
         if(i>0){
             delRoleCacheByPerms(id);
             return true;
@@ -42,7 +42,7 @@ public class SystemPermissionServiceImpl implements SystemPermissionService{
 
     @Override
     public boolean updatePermission(SystemPermission permission) {
-        int i=systemPermissionDao.updatePermission(permission);
+        int i= permissionDao.updatePermission(permission);
         if(i>0){
             delRoleCacheByPerms(permission.getId());
             return true;
@@ -53,7 +53,7 @@ public class SystemPermissionServiceImpl implements SystemPermissionService{
     @Override
     public SystemPermission getPermissionById(int id) {
 
-        return systemPermissionDao.getPermissionById(id);
+        return permissionDao.getPermissionById(id);
     }
 
     @Override
@@ -62,14 +62,14 @@ public class SystemPermissionServiceImpl implements SystemPermissionService{
         if(s!=null&&s.size()>0){
             return s;
         }else{
-            s=systemPermissionDao.getPermissionListByRoleId(rid);
+            s= permissionDao.getPermissionListByRoleId(rid);
             redisTemplate.opsForList().leftPushAll(PERMISSIONS_ROLE+rid,s);
         }
         return s;
     }
 
     private void delRoleCacheByPerms(int id){
-        List<Integer> list=systemPermissionDao.getRoleIdListByPerms(id);
+        List<Integer> list= permissionDao.getRoleIdListByPerms(id);
         if(list!=null&&!list.isEmpty()){
             list.forEach(l->redisTemplate.delete(PERMISSIONS_ROLE+l));
         }

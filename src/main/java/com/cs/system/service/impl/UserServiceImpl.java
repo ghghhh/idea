@@ -2,9 +2,9 @@ package com.cs.system.service.impl;
 
 import com.cs.common.aop.Update;
 import com.cs.common.utils.UserUtils;
-import com.cs.system.dao.SystemUserDao;
+import com.cs.system.dao.UserDao;
 import com.cs.system.entity.SystemUser;
-import com.cs.system.service.SystemUserService;
+import com.cs.system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
  * Created by s0c00q3 on 2017/2/23.
  */
 @Service
-public class SystemUserServiceImpl implements SystemUserService{
+public class UserServiceImpl implements UserService {
     @Autowired
-    private SystemUserDao userDao;
+    private UserDao userDao;
     @Override
     public SystemUser login(@Update String username) {
         SystemUser user=userDao.login(username);

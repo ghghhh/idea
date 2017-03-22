@@ -1,7 +1,7 @@
 package com.cs.system.controller;
 
 import com.cs.system.entity.SystemRole;
-import com.cs.system.service.SystemRoleServive;
+import com.cs.system.service.RoleServive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController("role")
 public class RoleController {
     @Autowired
-    private SystemRoleServive systemRoleServive;
+    private RoleServive roleServive;
 
     @RequestMapping(value="get")
     public SystemRole getRole(int id){
-        SystemRole role= systemRoleServive.getRoleById(id);
+        SystemRole role= roleServive.getRoleById(id);
         return role;
     }
 }

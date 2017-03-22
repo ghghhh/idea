@@ -3,9 +3,9 @@ package com.cs.shiro;
 import com.cs.system.entity.SystemPermission;
 import com.cs.system.entity.SystemRole;
 import com.cs.system.entity.SystemUser;
-import com.cs.system.service.SystemPermissionService;
-import com.cs.system.service.SystemRoleServive;
-import com.cs.system.service.SystemUserService;
+import com.cs.system.service.PermissionService;
+import com.cs.system.service.RoleServive;
+import com.cs.system.service.UserService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -26,16 +26,16 @@ public class MyRealm extends AuthorizingRealm{
 
     private final Logger log= LoggerFactory.getLogger(MyRealm.class);
     @Autowired
-    private SystemUserService systemUserService;
+    private UserService userService;
     @Autowired
-    private SystemRoleServive systemRoleServive;
+    private RoleServive roleServive;
     @Autowired
-    private SystemPermissionService systemPermissionService;
+    private PermissionService systemPermissionService;
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
         SystemUser user=(SystemUser)principals.getPrimaryPrincipal();
-        List<SystemRole> roles=systemRoleServive.getRoleListByUserId(user.getId());
+        List<SystemRole> roles= roleServive.getRoleListByUserId(user.getId());
         List<String> roleList=new ArrayList<>();
         List<String> permList=new ArrayList<>();
         roles.forEach(r->{roleList.add(r.getRoleName());
@@ -54,7 +54,7 @@ public class MyRealm extends AuthorizingRealm{
         char[] password=userToken.getPassword();
         String pass=new String(password);
         try{
-            SystemUser m=systemUserService.login(name);
+            SystemUser m= userService.login(name);
             if(m!=null&&m.getUserPassword().equals(DigestUtils.sha512Hex(pass))){
                 AuthenticationInfo info=new SimpleAuthenticationInfo(m, password, getName());
                 log.debug("用户{}登录成功",name);

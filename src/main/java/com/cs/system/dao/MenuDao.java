@@ -8,7 +8,7 @@ import com.cs.system.entity.SystemRole;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 @Mapper
-public interface SystemMenuDao {
+public interface MenuDao {
 
 	 public List<SystemMenu> getMenuListByFatherId(@Param("id") int id, @Param("roles") Set<SystemRole> roles);
 }

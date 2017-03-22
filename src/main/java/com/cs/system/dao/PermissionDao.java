@@ -9,7 +9,7 @@ import java.util.List;
  * Created by s0c00q3 on 2017/3/20.
  */
 @Mapper
-public interface SystemPermissionDao {
+public interface PermissionDao {
     int addPermission(SystemPermission permission);
     int delPermission(int id);
     int updatePermission(SystemPermission permission);

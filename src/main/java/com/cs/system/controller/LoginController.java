@@ -1,14 +1,13 @@
 package com.cs.system.controller;
 import com.cs.common.baseEntity.ReturnObject;
 import com.cs.system.entity.SystemUser;
-import com.cs.system.service.SystemUserService;
+import com.cs.system.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,7 +16,7 @@ import static com.cs.shiro.FormFiler.URL;
 @Controller
 public class LoginController {
 	@Autowired
-	private SystemUserService myusersService;
+	private UserService myusersService;
 	
 	final Logger log=LoggerFactory.getLogger(LoginController.class);
     
