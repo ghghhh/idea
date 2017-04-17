@@ -9,6 +9,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.lang.annotation.Annotation;
@@ -17,9 +19,11 @@ import java.lang.reflect.Parameter;
 /**
  * Created by s0c00q3 on 2017/3/7.
  */
-@Component
-@Aspect
+//@Component
+//@Aspect
 public class UserAop {
+    private Logger log = LoggerFactory.getLogger(UserAop.class);
+
     @Pointcut("execution(* com.cs..*(..))")
     public void service(){}
     @Before("service()")
@@ -27,7 +31,7 @@ public class UserAop {
         Object[] args=jp.getArgs();
         MethodSignature s=(MethodSignature)jp.getSignature();
         Annotation[][] annotations=s.getMethod().getParameterAnnotations();
-
+        log.info(jp.getTarget().toString());
         for(int i=0;i<annotations.length;i++){
             for(Annotation a:annotations[i]){
                 if(a instanceof Update){

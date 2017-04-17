@@ -1,8 +1,11 @@
 package com.cs.system.service.impl;
 
 import com.cs.system.dao.RoleDao;
+import com.cs.system.dao.UserDao;
 import com.cs.system.entity.SystemRole;
 import com.cs.system.service.RoleServive;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -14,13 +17,20 @@ import java.util.List;
  */
 @Service
 public class RoleServiveImpl implements RoleServive {
+    private Logger log = LoggerFactory.getLogger(RoleServiveImpl.class);
+
     @Autowired
     private RoleDao roleDao;
+    @Autowired
+    private UserDao userDao;
     @Autowired
     private RedisTemplate redisTemplate;
     @Override
     public SystemRole getRoleById(int id) {
-        return roleDao.getRoleById(id);
+         userDao.login("cs");
+         log.info("--------");
+         return roleDao.getRoleById(id);
+
     }
 
     @Override
