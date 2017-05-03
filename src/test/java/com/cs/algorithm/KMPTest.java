@@ -1,16 +1,12 @@
 package com.cs.algorithm;
 
 public class KMPTest {
+	
 
 	public static void main(String[] args) {
-		String s="aaaaaaaaaaaaaaaaaaab";
-		String b="aaaaaaabaaaaaaaaab";
-		int []n=getNest(b);	
-		for(int i:n){
-			System.out.print(i+" ");
-		}
-		System.out.println();
-		search(s, b, n);
+		String s="aaaaaaaaaaaaaaaab";
+		String b="aaaaaaaaaaaaaaaab11";
+		find(s,b);
 	}
 
 	public static int[] getNest(String s){
@@ -50,5 +46,23 @@ public class KMPTest {
 			}
 		}
 	}
-	
+	//暴力匹配
+	public static int find(String target,String find){
+		int i=target.length();
+		int j=find.length();
+		for(int a=0;a<=i-j;a++){
+			int b;
+			for(b=0;b<j;b++){
+				if(target.charAt(a+b)!=find.charAt(b)){
+					break;
+				}
+			}
+			if(b==j){
+				System.out.println("找到匹配的字符串,范围为:"+a+"-"+(a+b));
+				return a;
+			}
+		}
+		System.out.println("没有找到匹配的字符串");
+		return -1;
+	}
 }

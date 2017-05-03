@@ -3,9 +3,10 @@ package com.cs.sort;
 public class Test {
 
 	public static void main(String[] args) {
-		int[] nums={1,2,3,4,5,-1,1,3,4,5,-7};
+		int[] nums={1,2,3,7,9,12,33,43,99};
 		//findOut(nums);
-        System.out.println(say(nums));
+        System.out.println(search1(nums,0,nums.length,12));
+		System.out.println(search(nums,12));
 	}
 
 	/**
@@ -71,5 +72,37 @@ public class Test {
 			}
 		}
 		return min;
+	}
+
+	//二分查找
+	public static int search1(int[] nums,int min,int max,int target){
+		if(min==max){
+			return -1;
+		}
+		int mid=(min+max)/2;
+		if(nums[mid]==target){
+			return mid;
+		}else if(nums[mid]>target){
+			return search1(nums,min,mid-1,target);
+		}else if(nums[mid]<target){
+			return search1(nums,mid+1,max,target);
+		}else{
+			return 0;
+		}
+	}
+	public static int search(int[] nums,int target){
+		int left=0;
+		int right=nums.length;
+		while(left<=right){
+			int mid=(left+right)/2;
+			if(nums[mid]==target){
+				return mid;
+			}else if(nums[mid]>target){
+				right=mid-1;
+			}else if(nums[mid]<target){
+                left=mid+1;
+			}
+		}
+		return -1;
 	}
 }

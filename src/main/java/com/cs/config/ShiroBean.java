@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
 /**
  * Created by s0c00q3 on 2017/2/28.
@@ -46,5 +47,11 @@ public class ShiroBean {
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         return redisTemplate;
+    }
+
+    //@Bean(name="multipartResolver")
+    public StandardServletMultipartResolver multipartResolver(){
+        StandardServletMultipartResolver multipartResolver=new StandardServletMultipartResolver();
+        return multipartResolver;
     }
 }
