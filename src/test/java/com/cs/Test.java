@@ -13,29 +13,17 @@ import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.security.SecureRandom;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by s0c00q3 on 2017/3/20.
  */
 public class Test {
     public static void main (String[] args) throws UnsupportedEncodingException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-       /* Class c=Test.class;
-        Method[] mm= c.getDeclaredMethods();
-        for(Method m:mm){
-            if(m.getName().equals("byteTochar")){
-               Class[] p= m.getParameterTypes();
-                System.out.println(p[0].getName());
-                Method me=c.getDeclaredMethod("byteTochar",byte[].class);
-                char[] o= (char[]) m.invoke(c,"ggg".getBytes());
-                System.out.println(new String(o));
-            }
-        }*/
-       char[] c= byteTochar("大颯颯大".getBytes());
-        System.out.println(new String(c));
+        int i=0;
+        int j=i++ + ++i;
+        System.out.println(i);
+        System.out.println(j);
     }
 
     public static char[] byteTochar(byte[] b){

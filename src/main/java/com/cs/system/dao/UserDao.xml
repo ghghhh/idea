@@ -16,5 +16,34 @@
         <result property="birthday" column="birthday"/>
         <result property="email" column="email"/>
     </resultMap>
+    <resultMap type="com.cs.system.entity.SystemUser" id="myUserMap1">
+        <result property="userName" column="user_name"/>
+        <result property="id" column="id"/>
+        <result property="info" column="info"/>
+        <result property="sex" column="sex"/>
+        <result property="mobilePhone" column="mobile_phone"/>
+        <result property="birthday" column="birthday"/>
+        <result property="email" column="email"/>
+    </resultMap>
+    <select id="getUserList" resultMap="myUserMap1">
+        SELECT * from sys_user
+        <where>
+            <if test="userName!=null">
+                user_name =#{userName}
+            </if>
+            <if test="mobilePhone!=null">
+                and mobile_phone =#{mobilePhone}
+            </if>
+            <if test="createDateStart!=null">
+                and create_date >=#{createDateStart}
+            </if>
+            <if test="createDateEnd!=null">
+                and create_date &lt;= #{createDateEnd}
+            </if>
+        </where>
+        <if test="sort!=null">
+            ORDER BY ${sort} ${order}
+        </if>
 
+    </select>
 </mapper>

@@ -45,9 +45,6 @@ public class LoginController {
 	@RequestMapping(value="login",method=RequestMethod.POST)
 	@ResponseBody
 	public Object login(HttpServletRequest request) throws IOException, ServletException {
-
-		Collection<Part> parts= request.getParts();
-		parts.forEach(p-> System.out.println(p.getName()));
 		Subject subject=SecurityUtils.getSubject();
 		ReturnObject r=new ReturnObject();
 	    if(subject.getPrincipal()!=null){

@@ -30,11 +30,13 @@ public class MyPermsFilter extends PermissionsAuthorizationFilter{
     }
 
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
+        HttpServletRequest httpServletRequest=(HttpServletRequest)request;
+        String url=httpServletRequest.getServletPath();
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");
         ReturnObject r=new ReturnObject();
         r.setCode("401");
-        r.setMsg("权限不够");
+        r.setMsg("无权限访问 "+url);
         response.getWriter().write(mapper.writeValueAsString(r));
 
         return false;
