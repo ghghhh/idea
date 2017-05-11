@@ -1,6 +1,6 @@
 package com.cs.system.controller;
 
-import com.cs.common.utils.SortUtil;
+import com.cs.common.utils.ValidatSortUtil;
 import com.cs.system.entity.SysUserForm;
 import com.cs.system.entity.SystemUser;
 import com.cs.system.service.UserService;
@@ -25,7 +25,7 @@ public class UserController {
     public Map getUserList(SysUserForm userForm, int page, int rows) throws Exception {
         Map map=new HashMap();
         if(userForm.getSort()!=null){
-            userForm.setSort(SortUtil.change(userForm));
+            ValidatSortUtil.validat(userForm);
         }
          List<SystemUser> list=userService.getUserList(userForm);
 
