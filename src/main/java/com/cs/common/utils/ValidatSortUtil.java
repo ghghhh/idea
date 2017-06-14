@@ -54,4 +54,13 @@ public class ValidatSortUtil {
         }
         return;
     }
+
+    public static void main(String[] args) {
+        SysUserForm s=new SysUserForm();
+        s.setSort(null);
+        s.setOrder("asc");
+        validat(s);
+        System.out.println(s.getSort());
+        System.out.println(s.getOrder());
+    }
 }

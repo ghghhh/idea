@@ -8,7 +8,7 @@ public class AllRange {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String[] c={"1","2","3","4","5"};
+		String[] c={"1","2","3"};
 		allRange(c, 0, c.length);
 	}
 

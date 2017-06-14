@@ -31,6 +31,7 @@ public class ShiroBean {
         chainDefinition.addPathDefinition("/css/**", "anon");
         chainDefinition.addPathDefinition("/logout", "logout");
         chainDefinition.addPathDefinition("/**", "user,consession,perms");
+        //chainDefinition.addPathDefinition("/**", "anon");
         return chainDefinition;
     }
 

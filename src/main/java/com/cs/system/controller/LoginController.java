@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Collection;
 
@@ -31,8 +32,15 @@ public class LoginController {
     
 	private final static String successUrl="/cs/html/main.html";
 	@RequestMapping(value="login",method=RequestMethod.GET)
-	public String login0(SystemUser myusers) {
+	public String login0(SystemUser myusers,HttpServletRequest request) throws IOException {
 		//UsernamePasswordToken token=new UsernamePasswordToken(myusers.getUserName(), myusers.getUserPassword().toCharArray());
+		System.out.println(request.getContentLength());
+		System.out.println(request.getContentType());
+		BufferedReader br=request.getReader();
+		String s=null;
+		while ((s=br.readLine())!=null){
+			System.out.println(s);
+		}
 		Subject subject=SecurityUtils.getSubject();
 		Object o=subject.getPrincipal();
 		if(o==null){
@@ -47,6 +55,7 @@ public class LoginController {
 	public Object login(HttpServletRequest request) throws IOException, ServletException {
 		Subject subject=SecurityUtils.getSubject();
 		ReturnObject r=new ReturnObject();
+
 	    if(subject.getPrincipal()!=null){
 			Session session=subject.getSession();
 			Object url=session.getAttribute(URL);

@@ -10,7 +10,7 @@ public class DPtext {
         	System.out.print(i+" ");
         }
         printCutRodSolution(price, 10);
-        System.out.println("递归调用"+digui(price, 9));
+        System.out.println("递归调用"+digui(price, 10));
 	}
 
 	public static int digui(int[]p,int n){
