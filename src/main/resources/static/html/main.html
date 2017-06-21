@@ -21,7 +21,7 @@
 	<!--  <div data-options="region:'east',title:'East',split:true"
 		style="width:100px;"></div>-->
 	<div data-options="region:'west',title:'West',split:true"
-		style="width:100px;">
+		style="width:200px;">
 		<ul id="tt" class="easyui-tree" data-options="url:'../menu/load'"></ul>
 	</div>
 	<div data-options="region:'center',title:'center title'"
@@ -42,8 +42,8 @@
 				$("#tab").tabs('add', {
 					title : node.text,
 					closable : true,
-					//content : "<iframe src='"+path+node.menuUrl+"'height='100%'width='100%' frameborder=0 scrolling='auto'/>"
-				    href:path+node.menuUrl
+					content : "<iframe src='"+node.menuUrl+"'height='100%'width='100%' frameborder=0 scrolling='auto'/>"
+				    //href:path+node.menuUrl
 				});
 				}else{
 				$("#tab").tabs('select',node.text);

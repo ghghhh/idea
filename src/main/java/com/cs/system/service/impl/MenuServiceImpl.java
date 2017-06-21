@@ -7,8 +7,10 @@ import com.cs.system.entity.SystemMenu;
 import com.cs.system.entity.SystemRole;
 import com.cs.system.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 @Service
+@Primary
 public class MenuServiceImpl implements MenuService {
 
 	@Autowired

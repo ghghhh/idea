@@ -1,6 +1,7 @@
 package com.cs.system.entity;
 
 import com.cs.common.baseEntity.BaseRequestDTO;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -15,6 +16,7 @@ public class SystemUser extends BaseRequestDTO{
     private String userName;
     private String userPassword;
     private String sex;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate birthday;
     private String mobilePhone;
     private String email;

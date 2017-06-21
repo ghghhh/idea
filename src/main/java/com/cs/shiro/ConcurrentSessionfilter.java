@@ -39,11 +39,11 @@ public class ConcurrentSessionfilter extends AccessControlFilter{
             if(list.contains(sid)){
                 return true;
             }else{
-                if(subject.isRemembered()&&list.size()>=loginNum){
+                /*if(subject.isRemembered()&&list.size()>=loginNum){
                     subject.logout();
                     this.saveRequestAndRedirectToLogin(request ,response );
                     return false;
-                }
+                }*/
                 l=redisTemplate.opsForList().leftPush(cacheName,sid);
                 checkNum(l,cacheName);
             }
