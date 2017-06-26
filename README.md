@@ -6,4 +6,5 @@
 
 八皇后问题
 https://github.com/ghghhh/idea/blob/master/src/test/java/com/cs/algorithm/EightQueen.java
+排序算法练习 https://github.com/ghghhh/idea/tree/master/src/test/java/com/cs/sort
 
