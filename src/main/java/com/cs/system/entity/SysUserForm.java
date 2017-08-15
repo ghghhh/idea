@@ -40,4 +40,14 @@ public class SysUserForm extends SystemUser{
     public void setOrder(String order) {
         this.order = order;
     }
+
+    @Override
+    public String toString() {
+        return "SysUserForm{" +
+                "sort='" + sort + '\'' +
+                ", page=" + page +
+                ", rows=" + rows +
+                ", order='" + order + '\'' +
+                '}';
+    }
 }
