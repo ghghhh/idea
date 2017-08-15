@@ -22,6 +22,7 @@ import java.lang.reflect.Parameter;
 //@Component
 //@Aspect
 public class UserAop {
+
     private Logger log = LoggerFactory.getLogger(UserAop.class);
 
     @Pointcut("execution(* com.cs..*(..))")
