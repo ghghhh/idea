@@ -14,14 +14,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 /**
  * Created by s0c00q3 on 2017/3/16.
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 public class RoleTest {
     private Logger log = LoggerFactory.getLogger(RoleTest.class);
-    @Autowired
+    //@Autowired
     private RoleServive roleServive;
 
-    @Test
+    //@Test
     public void Test(){
         long l1=System.currentTimeMillis();
 
