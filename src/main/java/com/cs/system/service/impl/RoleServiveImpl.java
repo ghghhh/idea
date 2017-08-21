@@ -1,15 +1,12 @@
 package com.cs.system.service.impl;
 
 import com.cs.system.dao.RoleDao;
-import com.cs.system.dao.UserDao;
 import com.cs.system.entity.SystemRole;
 import com.cs.system.service.RoleServive;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import static com.cs.common.utils.CacheName.PERMISSIONS_ROLE;
 import java.util.List;
 
 /**
@@ -21,14 +18,10 @@ public class RoleServiveImpl implements RoleServive {
 
     @Autowired
     private RoleDao roleDao;
-    @Autowired
-    private UserDao userDao;
-    @Autowired
-    private RedisTemplate redisTemplate;
+   
     @Override
     public SystemRole getRoleById(int id) {
-         userDao.login("cs");
-         log.info("--------");
+      
          return roleDao.getRoleById(id);
 
     }
@@ -42,7 +35,6 @@ public class RoleServiveImpl implements RoleServive {
     public boolean delRole(int id) {
         int i=roleDao.delRoleById(id);
         if(i>0){
-            delRoleCacheByRoleId(id);
             return true;
         }
         return false;
@@ -63,7 +55,4 @@ public class RoleServiveImpl implements RoleServive {
         return list;
     }
 
-    private void delRoleCacheByRoleId(int id){
-        redisTemplate.delete(PERMISSIONS_ROLE+id);
-    }
 }

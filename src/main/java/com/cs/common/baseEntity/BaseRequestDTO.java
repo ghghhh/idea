@@ -13,7 +13,6 @@ public class BaseRequestDTO implements java.io.Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String createBy;
-
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createDate;

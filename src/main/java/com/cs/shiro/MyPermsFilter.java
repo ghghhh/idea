@@ -1,18 +1,12 @@
 package com.cs.shiro;
 
 import com.cs.common.baseEntity.ReturnObject;
-import com.cs.common.utils.BeanUtil;
 import com.cs.common.utils.ServletUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.shiro.subject.Subject;
-import org.apache.shiro.util.StringUtils;
 import org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter;
-import org.apache.shiro.web.util.WebUtils;
-
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**

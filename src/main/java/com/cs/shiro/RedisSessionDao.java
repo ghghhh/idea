@@ -1,22 +1,17 @@
 package com.cs.shiro;
 
 import com.cs.common.utils.ServletUtil;
-import com.cs.common.utils.UserUtils;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
-import org.apache.shiro.session.mgt.eis.CachingSessionDAO;
-import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -24,12 +19,12 @@ import java.util.concurrent.TimeUnit;
  */
 public class RedisSessionDao extends AbstractSessionDAO{
 
-    private static final Logger logger= LoggerFactory.getLogger(RedisSessionDao.class);
+    private static final Logger logger= LogManager.getLogger(RedisSessionDao.class);
     @Autowired
     private ServletUtil servletUtil;
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String,Object> redisTemplate;
     private static final String CACHE_KEY="session_";
     protected Serializable doCreate(Session session) {
             Serializable sessionId = generateSessionId(session);

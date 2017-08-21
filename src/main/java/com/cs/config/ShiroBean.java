@@ -42,10 +42,11 @@ public class ShiroBean {
     }
 
     @Bean(name="redisTemplate")
-    public RedisTemplate<Object,Object> redisTemplate(RedisConnectionFactory redisConnectionFactory){
-        RedisTemplate<Object,Object> redisTemplate=new RedisTemplate<>();
-        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
+    public RedisTemplate<String,Object> redisTemplate(RedisConnectionFactory redisConnectionFactory){
+        RedisTemplate<String,Object> redisTemplate=new RedisTemplate<>();
+        StringRedisSerializer stringRedisSerializer=new StringRedisSerializer();
+        redisTemplate.setHashKeySerializer(stringRedisSerializer);
+        redisTemplate.setKeySerializer(stringRedisSerializer);
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         return redisTemplate;
     }

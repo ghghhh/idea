@@ -34,7 +34,7 @@ public class ShiroConfig {
     @Autowired
     private ShiroFilterFactoryBean shiroFilterFactoryBean;
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String,String> redisTemplate;
     @Autowired
     private RedisSessionDao redisSessionDao;
     @Autowired

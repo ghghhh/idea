@@ -4,6 +4,7 @@ import com.cs.system.entity.SystemUser;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.tomcat.jni.Local;
 
 import java.nio.ByteBuffer;
@@ -18,7 +19,7 @@ import java.util.Date;
  * Created by s0c00q3 on 2017/3/20.
  */
 public class Test {
-    public static void main (String[] args) throws Exception {
+    public static void test (){
         float f1=20;
         float f2=20.5f;
         float f3=20.3f;
@@ -42,13 +43,8 @@ public class Test {
         return c;
     }
 
-    public static byte[] random(){
-        SecureRandom random = new SecureRandom();
-        byte[] b=new byte[64];
-        random.nextBytes(b);
-        String s=Hex.encodeHexString(b);
-        System.out.println(s);
-        System.out.println(s.length());
-        return b;
+    public static void main(String[] args){
+        String password="cs";
+        System.out.println(DigestUtils.sha512Hex(password));
     }
 }

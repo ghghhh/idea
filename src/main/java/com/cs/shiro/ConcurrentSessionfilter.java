@@ -15,7 +15,7 @@ public class ConcurrentSessionfilter extends AccessControlFilter{
     private static final String LOGINED="logined_";
 
     private int loginNum;
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String,String> redisTemplate;
     private RedisSessionDao redisSessionDao;
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
@@ -52,7 +52,7 @@ public class ConcurrentSessionfilter extends AccessControlFilter{
     }
 
 
-    public void setRedisTemplate(RedisTemplate redisTemplate) {
+    public void setRedisTemplate(RedisTemplate<String,String> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 

@@ -1,58 +1,39 @@
 package com.cs.system.controller;
 import com.cs.common.baseEntity.ReturnObject;
 import com.cs.system.entity.SystemUser;
-import com.cs.system.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.Collection;
 
 import static com.cs.shiro.FormFiler.URL;
 @Controller
 public class LoginController {
-	@Autowired
-	private UserService myusersService;
+	
 	
 	final Logger log=LoggerFactory.getLogger(LoginController.class);
     
 	private final static String successUrl="/cs/html/main.html";
 	@RequestMapping(value="login",method=RequestMethod.GET)
-	public String login0(SystemUser myusers,HttpServletRequest request) throws IOException {
-		//UsernamePasswordToken token=new UsernamePasswordToken(myusers.getUserName(), myusers.getUserPassword().toCharArray());
-		System.out.println(request.getContentLength());
-		System.out.println(request.getContentType());
-		BufferedReader br=request.getReader();
-		String s=null;
-		while ((s=br.readLine())!=null){
-			System.out.println(s);
-		}
+	public String login0(SystemUser myusers,HttpServletRequest request){
 		Subject subject=SecurityUtils.getSubject();
 		Object o=subject.getPrincipal();
 		if(o==null){
-			return "html/index.html";
+			return "index";
 		}else{
-			return "redirect:html/main.html";
+			return "redirect:/main";
 		}
 	}
 	
 	@RequestMapping(value="login",method=RequestMethod.POST)
 	@ResponseBody
-	public Object login(HttpServletRequest request) throws IOException, ServletException {
+	public Object login(HttpServletRequest request){
 		Subject subject=SecurityUtils.getSubject();
 		ReturnObject r=new ReturnObject();
 
@@ -72,7 +53,7 @@ public class LoginController {
 		}
 		return r;
 	}
-	@RequestMapping(value = "logout/haha_haha")
+	@RequestMapping(value = "/logout")
 	@ResponseBody
 	public Object logout(){
 		Subject subject=SecurityUtils.getSubject();

@@ -7,13 +7,13 @@ import com.cs.system.service.PermissionService;
 import com.cs.system.service.RoleServive;
 import com.cs.system.service.UserService;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class MyRealm extends AuthorizingRealm{
 
-    private final Logger log= LoggerFactory.getLogger(MyRealm.class);
+    private final Logger log= LogManager.getLogger(MyRealm.class);
     @Autowired
     private UserService userService;
     @Autowired

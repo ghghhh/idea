@@ -1,11 +1,9 @@
 package com.cs.system.service.impl;
 
-import static com.cs.common.utils.CacheName.PERMISSIONS_ROLE;
 import com.cs.system.dao.PermissionDao;
 import com.cs.system.entity.SystemPermission;
 import com.cs.system.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +17,7 @@ import java.util.List;
 public class PermissionServiceImpl implements PermissionService {
     @Autowired
     private PermissionDao permissionDao;
-    @Autowired
-    private RedisTemplate redisTemplate;
+   
     @Override
     public boolean addPermission(SystemPermission permission) {
        int i= permissionDao.addPermission(permission);
@@ -33,8 +30,7 @@ public class PermissionServiceImpl implements PermissionService {
               throw new Exception();
         }
         int i= permissionDao.delPermission(id);
-        if(i>0){
-            delRoleCacheByPerms(id);
+        if(i>0){            
             return true;
         }
         return false;
@@ -43,8 +39,7 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public boolean updatePermission(SystemPermission permission) {
         int i= permissionDao.updatePermission(permission);
-        if(i>0){
-            delRoleCacheByPerms(permission.getId());
+        if(i>0){           
             return true;
         }
         return false;
@@ -57,21 +52,11 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public List<SystemPermission> getPermissionListByRoleId(int rid) {
-        List<SystemPermission> s=redisTemplate.opsForList().range(PERMISSIONS_ROLE+rid,0,-1);
-        if(s!=null&&s.size()>0){
-            return s;
-        }else{
-            s= permissionDao.getPermissionListByRoleId(rid);
-            redisTemplate.opsForList().leftPushAll(PERMISSIONS_ROLE+rid,s);
-        }
+    public List<SystemPermission> getPermissionListByRoleId(int rid) {        
+    	List<SystemPermission> s= permissionDao.getPermissionListByRoleId(rid);
+        
         return s;
     }
 
-    private void delRoleCacheByPerms(int id){
-        List<Integer> list= permissionDao.getRoleIdListByPerms(id);
-        if(list!=null&&!list.isEmpty()){
-            list.forEach(l->redisTemplate.delete(PERMISSIONS_ROLE+l));
-        }
-    }
+    
 }
