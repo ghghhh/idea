@@ -13,7 +13,6 @@ public interface PermissionDao {
     int addPermission(SystemPermission permission);
     int delPermission(int id);
     int updatePermission(SystemPermission permission);
-    SystemPermission getPermissionById(int id);
+    SystemPermission getPermissionById(int id);     
     List<SystemPermission> getPermissionListByRoleId(int rid);
-    List<Integer> getRoleIdListByPerms(int id);
 }

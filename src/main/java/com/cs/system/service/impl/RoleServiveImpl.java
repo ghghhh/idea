@@ -34,19 +34,15 @@ public class RoleServiveImpl implements RoleServive {
     @Override
     public boolean delRole(int id) {
         int i=roleDao.delRoleById(id);
-        if(i>0){
-            return true;
-        }
-        return false;
+       
+        return i>0;
     }
 
     @Override
     public boolean updateRole(SystemRole role) {
         int i=roleDao.updateRole(role);
-        if(i>0){
-            return true;
-        }
-        return false;
+       
+        return i>0;
     }
 
     @Override

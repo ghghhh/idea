@@ -1,8 +1,6 @@
 package com.cs.system.dao;
-
 import com.cs.system.entity.SystemRole;
 import org.apache.ibatis.annotations.Mapper;
-
 import java.util.List;
 
 /**
@@ -14,5 +12,5 @@ public interface RoleDao {
     int updateRole(SystemRole systemRole);
     int delRoleById(int id);
     SystemRole getRoleById(int id);
-    List<SystemRole> getRoleListByUserId(long uid);
+    List<SystemRole> getRoleListByUserId(long uid);   
 }

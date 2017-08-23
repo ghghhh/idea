@@ -30,19 +30,14 @@ public class PermissionServiceImpl implements PermissionService {
               throw new Exception();
         }
         int i= permissionDao.delPermission(id);
-        if(i>0){            
-            return true;
-        }
-        return false;
+       
+        return i>0;
     }
 
     @Override
     public boolean updatePermission(SystemPermission permission) {
         int i= permissionDao.updatePermission(permission);
-        if(i>0){           
-            return true;
-        }
-        return false;
+        return i>0;
     }
 
     @Override
