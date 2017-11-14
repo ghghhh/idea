@@ -3,10 +3,8 @@ package com.cs.sort;
 public class Test {
 
 	public static void main(String[] args) {
-		int[] nums={1,2,3,7,9,12,33,43,99};
-		//findOut(nums);
-        System.out.println(search1(nums,0,nums.length,12));
-		System.out.println(search(nums,12));
+		int i=setp(15);
+		System.out.println(i);
 	}
 
 	/**
@@ -40,7 +38,7 @@ public class Test {
 	
 	/*
 	 * 台阶问题，总共15级台阶，小明一次最多走3级 问有多少种走法 
-	 * 
+	 * 最后一步可以走1级或2级或3级
 	 */
 	public static int setp(int m){
 		if(m==1){
