@@ -2,7 +2,6 @@ package com.cs.config;
 
 
 import com.cs.common.utils.ServletUtil;
-import com.cs.shiro.ConcurrentSessionfilter;
 import com.cs.shiro.FormFiler;
 import com.cs.shiro.MyPermsFilter;
 import com.cs.shiro.RedisSessionDao;
@@ -34,7 +33,7 @@ public class ShiroConfig {
     @Autowired
     private ShiroFilterFactoryBean shiroFilterFactoryBean;
     @Autowired
-    private RedisTemplate<String,String> redisTemplate;
+    private RedisTemplate<String,Object> redisTemplate;
     @Autowired
     private RedisSessionDao redisSessionDao;
     @Autowired
@@ -45,7 +44,6 @@ public class ShiroConfig {
         Map<String,Filter> map=new LinkedHashMap<>();
         map.put("authc",formFiler());
         map.put("perms",myPermsFilter());
-        map.put("consession",concurrentSessionfilter());
         shiroFilterFactoryBean.setFilters(map);
         filterRegistrationBean.setFilter((AbstractShiroFilter) shiroFilterFactoryBean.getObject());
         filterRegistrationBean.setOrder(1);
@@ -54,6 +52,9 @@ public class ShiroConfig {
 
     public FormFiler formFiler(){
         FormFiler filter=new FormFiler();
+        filter.setLoginNum(loginNum);
+        filter.setRedis(redisTemplate);
+        filter.setRedisSessionDao(redisSessionDao);
         filter.setContextPath(path);
         return filter;
     }
@@ -61,13 +62,5 @@ public class ShiroConfig {
         MyPermsFilter perm=new MyPermsFilter();
         perm.setUtil(servletUtil);
         return perm;
-    }
-
-    public ConcurrentSessionfilter concurrentSessionfilter(){
-        ConcurrentSessionfilter myfilter=new ConcurrentSessionfilter();
-        myfilter.setRedisTemplate(redisTemplate);
-        myfilter.setRedisSessionDao(redisSessionDao);
-        myfilter.setLoginNum(loginNum);
-        return myfilter;
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
@@ -30,7 +31,7 @@ public class ShiroBean {
         chainDefinition.addPathDefinition("/js/**", "anon");
         chainDefinition.addPathDefinition("/css/**", "anon");
         chainDefinition.addPathDefinition("/logout", "logout");
-        chainDefinition.addPathDefinition("/**", "user,consession,perms");
+        chainDefinition.addPathDefinition("/**", "user,perms");
         //chainDefinition.addPathDefinition("/**", "anon");
         return chainDefinition;
     }
@@ -44,16 +45,10 @@ public class ShiroBean {
     @Bean(name="redisTemplate")
     public RedisTemplate<String,Object> redisTemplate(RedisConnectionFactory redisConnectionFactory){
         RedisTemplate<String,Object> redisTemplate=new RedisTemplate<>();
-        StringRedisSerializer stringRedisSerializer=new StringRedisSerializer();
-        redisTemplate.setHashKeySerializer(stringRedisSerializer);
-        redisTemplate.setKeySerializer(stringRedisSerializer);
+        StringRedisSerializer serializer=new StringRedisSerializer();
+        redisTemplate.setHashKeySerializer(serializer);
+        redisTemplate.setKeySerializer(serializer);
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         return redisTemplate;
-    }
-
-    //@Bean(name="multipartResolver")
-    public StandardServletMultipartResolver multipartResolver(){
-        StandardServletMultipartResolver multipartResolver=new StandardServletMultipartResolver();
-        return multipartResolver;
     }
 }
