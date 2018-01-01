@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE `sys_menu` (
   `id` int(6) NOT NULL AUTO_INCREMENT,
   `menu_name` varchar(32) NOT NULL,
@@ -8,6 +9,7 @@ CREATE TABLE `sys_menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `sys_permission`;
 CREATE TABLE `sys_permission` (
   `id` smallint(4) NOT NULL AUTO_INCREMENT,
   `permission_name` varchar(16) DEFAULT NULL,
@@ -16,6 +18,7 @@ CREATE TABLE `sys_permission` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role` (
   `id` smallint(4) NOT NULL AUTO_INCREMENT,
   `role_name` varchar(16) DEFAULT NULL,
@@ -24,6 +27,7 @@ CREATE TABLE `sys_role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `sys_role_menu`;
 CREATE TABLE `sys_role_menu` (
   `id` int(6) NOT NULL AUTO_INCREMENT,
   `role_id` int(6) NOT NULL,
@@ -31,6 +35,7 @@ CREATE TABLE `sys_role_menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `sys_role_permission`;
 CREATE TABLE `sys_role_permission` (
   `id` int(6) NOT NULL AUTO_INCREMENT,
   `role_id` int(6) NOT NULL,
@@ -38,6 +43,7 @@ CREATE TABLE `sys_role_permission` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user` (
   `id` bigint(8) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `user_name` varchar(16) NOT NULL,
@@ -55,6 +61,7 @@ CREATE TABLE `sys_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `sys_user_role`;
 CREATE TABLE `sys_user_role` (
   `id` int(6) NOT NULL AUTO_INCREMENT,
   `user_id` int(6) NOT NULL,

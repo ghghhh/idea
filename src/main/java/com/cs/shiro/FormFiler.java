@@ -4,7 +4,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.session.Session;
-import org.apache.shiro.session.mgt.SimpleSession;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.util.SavedRequest;
@@ -30,9 +29,9 @@ public class FormFiler extends FormAuthenticationFilter {
         	if(requestUrl.startsWith(contextPath)){
         		session.setAttribute(URL, requestUrl);
             }      	
-        }          
+        }
         //保存登录成功后的session至缓存 方便实现同时登录人数限制
-        SystemUser user=(SystemUser)subject.getPrincipal();
+        SystemUser user=(SystemUser)subject.getPrincipal();;
         long num=redis.opsForList().leftPush(LOGINED+user.getUserName(), session.getId());
         if(num>loginNum){
         	String s=(String)redis.opsForList().rightPop(LOGINED+user.getUserName());

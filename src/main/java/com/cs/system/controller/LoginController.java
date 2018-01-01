@@ -27,7 +27,7 @@ public class LoginController {
 		if(o==null){
 			return "index";
 		}else{
-			return "redirect:/main";
+			return "redirect:/html/main.html";
 		}
 	}
 	
