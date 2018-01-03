@@ -4,17 +4,20 @@ import com.cs.system.entity.SysUserForm;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by s0c00q3 on 2017/5/10.
  */
-public class ValidatSortUtil {
+public class ValidatFormUtil {	
+	
     /**
      * 验证前端传入的 sort order 等排序参数是否合法，并将参数转为对应的数据库列名
      *
      * */
-    public static void validat(Object o){
+    public static void validatSort(Object o){
         Class first=o.getClass();
         try {
             Field sort = first.getDeclaredField("sort");
@@ -37,7 +40,6 @@ public class ValidatSortUtil {
                     sb.append(c);
                 }
                 sort.set(o,sb.toString());
-
                 try {
                     Field order=o.getClass().getDeclaredField("order");
                     order.setAccessible(true);
@@ -46,20 +48,21 @@ public class ValidatSortUtil {
                         order.set(o,"asc");
                     }
                 } catch (Exception e) {
+                	
                 }
                 return;
             }
             sort.set(o,null);
         } catch (Exception e) {
+        	
         }
-        return;
     }
 
     public static void main(String[] args) {
         SysUserForm s=new SysUserForm();
         s.setSort(null);
         s.setOrder("asc");
-        validat(s);
+        validatSort(s);
         System.out.println(s.getSort());
         System.out.println(s.getOrder());
     }
