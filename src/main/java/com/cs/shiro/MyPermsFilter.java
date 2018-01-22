@@ -32,7 +32,6 @@ public class MyPermsFilter extends PermissionsAuthorizationFilter{
         r.setCode("401");
         r.setMsg("无权限访问 "+url);
         response.getWriter().write(mapper.writeValueAsString(r));
-
         return false;
     }
     private String[] buildPerm(ServletRequest request, ServletResponse response){

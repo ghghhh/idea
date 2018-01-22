@@ -24,6 +24,7 @@
         <result property="mobilePhone" column="mobile_phone"/>
         <result property="birthday" column="birthday"/>
         <result property="email" column="email"/>
+        <result property="createDate" column="createDate"/>
     </resultMap>
     <select id="getUserList" resultMap="myUserMap1">
         SELECT * from sys_user

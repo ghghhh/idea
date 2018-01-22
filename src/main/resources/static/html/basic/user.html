@@ -1,33 +1,16 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
-    <base href="<%=basePath%>">
-    
-    <title>My JSP 'user.jsp' starting page</title>
-        <%@ include file="/js.jsp"%>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
+  <head>    
+    <title>user page</title>    
+    <meta charset="UTF-8">
+    <script  src="/js/jquery.min.js"></script>
+    <script  src="/js/jquery.easyui.min.js"></script>
+    <link rel="stylesheet" href="/css/easyui.css" type="text/css"></link>
+    <script  src="/js/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="/js/springsecurity.js"></script>
   </head>
   <body>
-  <div align="center" style="margin: 10px">
-  <select id="cc" class="easyui-combobox" style="width:100px;">  
-    <option value="pid">用户编号</option>   
-    <option value="name">用户名</option>      
-  </select> 
-  <input id="tb" class="easyui-textbox"/>
-  <a id="search" class="easyui-linkbutton">搜索</a>
-  </div>
-  <table id="user" style="height:550px"></table> 
+
+  <table id="user" style="height:650px"></table> 
   <div id="addUser" class="easyui-window" style="width:300px;height:400px" closed=true>
          <form id="userInfo" method="post">
          <input class="easyui-textbox" type="hidden" name="pid"/>
@@ -54,17 +37,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </body>
   <script type="text/javascript">
   $("#user").datagrid({
-    url:'user/userList.do',
+    url:'/user/getList',
     method:'GET',
     columns:[[
-       {field:'',checkbox:true},
-       {field:'userName',title:'用户名',sortable:true},
-       {field:'userPassword',title:'密码'},
-       {field:'info',title:'信息'},
-       {field:'userSex',title:'性别',sortable:true},
-       {field:'roleName',title:'角色名'},
-       {field:'remarks',title:'角色备注'},
-       {field:'createDate',title:'创建时间'}
+       {field:'',checkbox:true,width:100},
+       {field:'userName',title:'用户名',sortable:true,width:200},
+       /* {field:'userPassword',title:'密码'}, */
+       {field:'info',title:'信息',width:200},
+       {field:'sex',title:'性别',sortable:true,width:200},
+       {field:'roleName',title:'角色名',width:200},
+       {field:'remarks',title:'角色备注',width:200},
+       {field:'createDate',title:'创建时间',width:200}
     ]],
     pagination:true,
     rownumbers:true,
@@ -74,26 +57,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
              {text:'删除用户'}
             ]
   })
-  //单击搜索按钮，触发单击事件，根据条件重新加载grid
-  $("#search").linkbutton({
-  onClick:function(){
-      var cb=$("#cc").combobox('getValue');
-      var tb=$("#tb").textbox('getValue');
-      $("#user").datagrid('load',{
-          search:tb,
-          searchType:cb
-        })
-      }
-  });
+  
   function addUser(){
 	  $('#addUser').window('setTitle','新增用户');
+	  $('#userInfo').form('clear');
 	  $('#addUser').window('open');
   }
-  $("#addUser").window({
-	  onClose:function(){
-	      alert("修改出错");
-          }
-  });
+  
   function editUser(value,row,index){
 	  var selectUser=$('#user').datagrid('getSelections')
 	  if(selectUser.length===0){

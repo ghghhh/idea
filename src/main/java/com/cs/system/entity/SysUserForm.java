@@ -1,14 +1,23 @@
 package com.cs.system.entity;
 
+import java.time.LocalDateTime;
+
 /**
  * Created by cs on 2017/6/22.
  */
 public class SysUserForm extends SystemUser{
-    private String sort;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String sort;
     private int page;
     private int rows;
     private String order;
-
+    private LocalDateTime createDateStart;
+    private LocalDateTime createDateEnd;
+    private String search;
+    private String searchType;
     public String getSort() {
         return sort;
     }
@@ -41,13 +50,39 @@ public class SysUserForm extends SystemUser{
         this.order = order;
     }
 
-    @Override
-    public String toString() {
-        return "SysUserForm{" +
-                "sort='" + sort + '\'' +
-                ", page=" + page +
-                ", rows=" + rows +
-                ", order='" + order + '\'' +
-                '}';
-    }
+	public LocalDateTime getCreateDateStart() {
+		return createDateStart;
+	}
+
+	public void setCreateDateStart(LocalDateTime createDateStart) {
+		this.createDateStart = createDateStart;
+	}
+
+	public LocalDateTime getCreateDateEnd() {
+		return createDateEnd;
+	}
+
+	public void setCreateDateEnd(LocalDateTime createDateEnd) {
+		this.createDateEnd = createDateEnd;
+	}
+
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
+	public String getSearchType() {
+		return searchType;
+	}
+
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
+	}
+	
+	
+
+    
 }

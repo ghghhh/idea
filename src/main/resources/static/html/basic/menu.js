@@ -34,7 +34,7 @@ function aa(){
 	$("#menu_info").submit();
 }
 $("#menu_info").form({
-	url:'/cs/menu/update',
+	url:'/menu/update',
 	onChange: function(target){
 		change=true;
 	},

@@ -32,17 +32,17 @@ public class ShiroBean {
         chainDefinition.addPathDefinition("/css/**", "anon");
         chainDefinition.addPathDefinition("/logout", "logout");
         chainDefinition.addPathDefinition("/**", "user,perms");
-        //chainDefinition.addPathDefinition("/**", "anon");
+        //chainDefinition.addPathDefinition("/**", "user");
         return chainDefinition;
     }
 
-    @Bean
+    //@Bean
     public RedisSessionDao sessionDAO(){
         RedisSessionDao dao=new RedisSessionDao();
         return dao;
     }
 
-    @Bean(name="redisTemplate")
+    //@Bean(name="redisTemplate")
     public RedisTemplate<String,Object> redisTemplate(RedisConnectionFactory redisConnectionFactory){
         RedisTemplate<String,Object> redisTemplate=new RedisTemplate<>();
         StringRedisSerializer serializer=new StringRedisSerializer();

@@ -25,16 +25,16 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
-    @Value("${server.contextPath}")
-    private String path;
+    /*@Value("${server.contextPath}")
+    private String path;*/
 
     @Value("${shiro.login.maxLoginNum}")
     private int loginNum;
     @Autowired
     private ShiroFilterFactoryBean shiroFilterFactoryBean;
-    @Autowired
+    //@Autowired
     private RedisTemplate<String,Object> redisTemplate;
-    @Autowired
+    //@Autowired
     private RedisSessionDao redisSessionDao;
     @Autowired
     private ServletUtil servletUtil;
@@ -53,9 +53,9 @@ public class ShiroConfig {
     public FormFiler formFiler(){
         FormFiler filter=new FormFiler();
         filter.setLoginNum(loginNum);
-        filter.setRedis(redisTemplate);
-        filter.setRedisSessionDao(redisSessionDao);
-        filter.setContextPath(path);
+        //filter.setRedis(redisTemplate);
+        //filter.setRedisSessionDao(redisSessionDao);
+        //filter.setContextPath(path);
         return filter;
     }
     public MyPermsFilter myPermsFilter(){

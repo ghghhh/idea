@@ -1,6 +1,6 @@
 package com.cs.system.controller;
 
-import com.cs.common.utils.ValidatSortUtil;
+import com.cs.common.utils.ValidatFormUtil;
 import com.cs.system.entity.SysUserForm;
 import com.cs.system.entity.SystemUser;
 import com.cs.system.service.UserService;
@@ -22,16 +22,16 @@ public class UserController {
     @Autowired
     private UserService userService;
     @RequestMapping("/user/getList")
-    public Map getUserList(SysUserForm userForm, int page, int rows) throws Exception {
-        Map map=new HashMap();
+    public Object getUserList(SysUserForm userForm, int page, int rows) throws Exception {
+        Map<String,Object> map=new HashMap<>();
         if(userForm.getSort()!=null){
-            ValidatSortUtil.validat(userForm);
+            ValidatFormUtil.validatSort(userForm);
         }
-         List<SystemUser> list=userService.getUserList(userForm);
+        List<SystemUser> list=userService.getUserList(userForm);
 
-        Page<SystemUser> page1=(Page<SystemUser>)list;
-        map.put("rows",list);
-        map.put("total",10);
+        Page<SystemUser> pageUser=(Page<SystemUser>)list;
+        map.put("rows",pageUser);
+        map.put("total",pageUser.getTotal());
         return map;
     }
 }
